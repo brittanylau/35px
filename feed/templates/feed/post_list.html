@@ -1,0 +1,21 @@
+<h1>Home</h1>
+
+<p><a href="{% url 'feed:post_create' %}">New post</a></p>
+
+<ul>
+  {% for post in object_list %}
+  <li>
+    <p>{{ post.photographer }}</p>
+    <img src="" alt="">
+    <h2>{{ post.title }}</h2>
+    <caption>{{ post.caption }}</caption>
+    <p>
+      <a href="{% url 'feed:post_detail' post.id %}">{{ post.posted_on }}</a>
+    </p>
+    <p>
+      <a href="{% url 'feed:post_edit' post.id %}">Edit</a>
+      <a href="{% url 'feed:post_delete' post.id %}">Delete</a>
+    </p>
+  </li>
+  {% endfor %}
+</ul>

@@ -1,0 +1,7 @@
+<h1>Delete post?</h1>
+<form method="post">
+  {% csrf_token %}
+  Are you sure you want to delete this post?
+  <button type="button" name="button">Cancel</button>
+  <input type="submit" value="Delete">
+</form>

@@ -3,9 +3,11 @@ from django.urls import path
 from . import views
 
 app_name = 'feed'
+home = '/feed/posts/' # fix this later
 urlpatterns = [
-    path('', views.index, name='index'),
-    path('detail/<int:photo_id>/', views.detail, name='detail'),
-    path('<int:photo_id>/comment/', views.comment, name='comment'),
-    path('post/', views.post, name='post'),
+    path('posts/',          views.PostList.as_view(),   name='post_list'),
+    path('post/<int:pk>',   views.PostDetail.as_view(), name='post_detail'),
+    path('create',          views.PostCreate.as_view(success_url=home), name='post_create'),
+    path('update/<int:pk>', views.PostUpdate.as_view(success_url=home), name='post_edit'),
+    path('delete/<int:pk>', views.PostDelete.as_view(success_url=home), name='post_delete'),
 ]
