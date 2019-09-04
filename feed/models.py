@@ -10,7 +10,6 @@ from django.urls import reverse
 #        return self.name + ', ' + self.location
 
 class Post(models.Model):
-    # photo
     title = models.CharField(max_length=50)
     caption = models.CharField(max_length=200)
     # image = models.FileField()
