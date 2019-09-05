@@ -7,13 +7,13 @@
   </head>
 
   <body>
-    <div class="page-header">
-      <h1><a href="/">InstaClone</a></h1>
-    </div>
-    <a class="btn btn-primary" href="{% url 'feed:post_create' %}" role="button">New post</a>
+    <nav class="navbar ">
+      <a class="navbar-brand" href="/">InstaClone</a>
+      <a class="btn btn-primary" href="{% url 'feed:post_create' %}" role="button">New post</a>
+    </nav>
 
     <div class="content container">
-      <div class="row">
+      <div class="row justify-content-center">
         <div class="col-md-8 py-5">
           {% block content %}
           {% endblock %}

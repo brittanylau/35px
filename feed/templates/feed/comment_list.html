@@ -2,7 +2,8 @@
   <ul class="list-group">
     {% for comment in post.comments.all %}
       <li class="list-group-item">
-        <strong>{{ comment.commenter }}</strong> • {{ comment.posted_on }}
+        <strong>{{ comment.commenter }}</strong>
+        <slot class="text-muted"> • {{ comment.posted_on|timesince }} ago</slot>
         <p>{{ comment.text|linebreaks }}</p>
         <a href="{% url 'feed:comment_edit' comment.id %}">Edit</a>
         <a href="{% url 'feed:comment_delete' comment.id %}">Delete</a>

@@ -14,17 +14,12 @@
 
   <div class="card-body">
     <h2 class=card-title>{{ post.title }}</h2>
-    <caption class=card-text>{{ post.caption }}</caption>
-    <br>
+    <p class=card-text>{{ post.caption }}</p>
     <a href="{% url 'feed:post_detail' pk=post.pk %}">{{ post.comments.count }} comment(s)</a>
-    <a href="{% url 'feed:comment_create' post.id %}">Comment</a>
   </div>
 
   <div class="card-footer">
-    <a href="{% url 'feed:post_detail' post.id %}" class="text-muted">{{ post.posted_on }}</a>
-
-    <a href="{% url 'feed:post_edit'   post.id %}">Edit</a>
-    <a href="{% url 'feed:post_delete' post.id %}">Delete</a>
+    <a href="{% url 'feed:post_detail' post.id %}" class="text-muted">{{ post.posted_on|timesince }} ago</a>
   </div>
 
 </div>

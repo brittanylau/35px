@@ -13,8 +13,7 @@ class Post(models.Model):
     title = models.CharField(max_length=50)
     caption = models.CharField(max_length=200)
     image = models.ImageField(upload_to='posts')
-    # photographer = models.ForeignKey(Photographer, on_delete=models.CASCADE)
-    photographer = 'Brittany'
+    photographer = 'Brittany' # models.ForeignKey(Photographer, on_delete=models.CASCADE)
     taken_on = models.DateField('date taken')
     posted_on = models.DateTimeField(auto_now=True)
 
@@ -34,4 +33,4 @@ class Comment(models.Model):
         return self.commenter + ' said \"' + self.text
 
     def get_absolute_url(self):
-        return reverse('feed:post_detail', kwargs={'pk': self.post.id}) 
+        return reverse('feed:post_detail', kwargs={'pk': self.post.id})
