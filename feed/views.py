@@ -15,11 +15,11 @@ class PostDetail(DetailView):
 
 class PostCreate(CreateView):
     model = Post
-    fields = [ 'title', 'caption', 'taken_on' ]
+    fields = [ 'image', 'title', 'caption', 'taken_on' ]
 
 class PostUpdate(UpdateView):
     model = Post
-    fields = [ 'title', 'caption', 'taken_on' ]
+    fields = [ 'image', 'title', 'caption', 'taken_on' ]
 
 class PostDelete(DeleteView):
     model = Post

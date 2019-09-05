@@ -12,7 +12,7 @@ from django.urls import reverse
 class Post(models.Model):
     title = models.CharField(max_length=50)
     caption = models.CharField(max_length=200)
-    # image = models.ImageField()
+    image = models.ImageField(upload_to='posts')
     # photographer = models.ForeignKey(Photographer, on_delete=models.CASCADE)
     photographer = 'Brittany'
     taken_on = models.DateField('date taken')

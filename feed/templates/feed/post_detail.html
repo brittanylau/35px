@@ -1,7 +1,11 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'feed/style.css' %}">
+
 <h1>{{ post.title }}</h1>
 
 <p>Taken by {{ post.photographer }} on {{ post.taken_on }}</p>
-<img src="https://miro.medium.com/fit/c/160/160/1*ggwp31l0eJxrp3QrhpaLlQ.png" alt=""><br>
+<img src="{{ post.image.url }}" alt="{{ post.title }}" class="photo">
+<br>
 <caption>{{ post.caption }}</caption>
 <p>{{ post.posted_on }}</p>
 <a href="{% url 'feed:post_edit' post.id %}">Edit</a>
