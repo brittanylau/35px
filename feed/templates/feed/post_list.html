@@ -1,22 +1,32 @@
 {% extends 'feed/base.html' %}
 
 {% block content %}
-<ul>
-  {% for post in object_list %}
-  <li>
-    <p>{{ post.photographer }}</p>
-    <h2>{{ post.title }}</h2>
-    <img src="{{ post.image.url }}" alt="{{ post.title }}" class="photo">
+{% for post in object_list %}
+<div class="card mb-4">
+
+  <div class="card-header">
+    {{ post.photographer }}
+  </div>
+
+  <a href="{% url 'feed:post_detail' post.id %}">
+    <img src="{{ post.image.url }}" alt="{{ post.title }}" class="card-img-top">
+  </a>
+
+  <div class="card-body">
+    <h2 class=card-title>{{ post.title }}</h2>
+    <caption class=card-text>{{ post.caption }}</caption>
     <br>
-    <caption>{{ post.caption }}</caption>
-    <p>
-      <a href="{% url 'feed:post_detail' post.id %}">{{ post.posted_on }}</a>
-    </p>
-    <p>
-      <a href="{% url 'feed:post_edit' post.id %}">Edit</a>
-      <a href="{% url 'feed:post_delete' post.id %}">Delete</a>
-    </p>
-  </li>
-  {% endfor %}
-</ul>
+    <a href="{% url 'feed:post_detail' pk=post.pk %}">{{ post.comments.count }} comment(s)</a>
+    <a href="{% url 'feed:comment_create' post.id %}">Comment</a>
+  </div>
+
+  <div class="card-footer">
+    <a href="{% url 'feed:post_detail' post.id %}" class="text-muted">{{ post.posted_on }}</a>
+
+    <a href="{% url 'feed:post_edit'   post.id %}">Edit</a>
+    <a href="{% url 'feed:post_delete' post.id %}">Delete</a>
+  </div>
+
+</div>
+{% endfor %}
 {% endblock %}

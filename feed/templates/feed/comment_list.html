@@ -1,0 +1,14 @@
+<div>
+  <ul class="list-group">
+    {% for comment in post.comments.all %}
+      <li class="list-group-item">
+        <strong>{{ comment.commenter }}</strong> • {{ comment.posted_on }}
+        <p>{{ comment.text|linebreaks }}</p>
+        <a href="{% url 'feed:comment_edit' comment.id %}">Edit</a>
+        <a href="{% url 'feed:comment_delete' comment.id %}">Delete</a>
+      </li>
+    {% empty %}
+      <p>No comments here yet :(</p>
+    {% endfor %}
+  </ul>
+</div>

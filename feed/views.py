@@ -33,12 +33,14 @@ class CommentList(ListView):
 
 class CommentCreate(CreateView):
     model = Comment
-    fields = [ 'commenter', 'text' ]
+    fields = [ 'post', 'commenter', 'text' ]
 
 class CommentUpdate(UpdateView):
     model = Comment
-    fields = [ 'text' ]
+    fields = [ 'commenter', 'text' ]
 
 class CommentDelete(DeleteView):
     model = Comment
-    success_url = reverse_lazy('feed:post_list') # maybe send back to post detail later
+
+    def get_success_url(self):
+        return reverse_lazy('feed:post_detail', kwargs={'pk': self.object.post.id})

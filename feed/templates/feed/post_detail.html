@@ -1,13 +1,29 @@
 {% extends 'feed/base.html' %}
 
 {% block content %}
-<h1>{{ post.title }}</h1>
+<div class="card mb-5">
+  <div class="card-header">
+    {{ post.photographer }}
+  </div>
 
-<p>Taken by {{ post.photographer }} on {{ post.taken_on }}</p>
-<img src="{{ post.image.url }}" alt="{{ post.title }}" class="photo">
-<br>
-<caption>{{ post.caption }}</caption>
-<p>{{ post.posted_on }}</p>
-<a href="{% url 'feed:post_edit' post.id %}">Edit</a>
-<a href="{% url 'feed:post_delete' post.id %}">Delete</a>
+  <img src="{{ post.image.url }}" alt="{{ post.title }}" class="card-img-top">
+
+  <div class="card-body">
+    <h2 class=card-title>{{ post.title }}</h2>
+    <caption class=card-text>{{ post.caption }}</caption>
+    <br>
+  </div>
+
+  <div class="card-footer">
+    <a href="{% url 'feed:post_detail' post.id %}" class="text-muted">{{ post.posted_on }}</a>
+
+    <a href="{% url 'feed:post_edit'   post.id %}">Edit</a>
+    <a href="{% url 'feed:post_delete' post.id %}">Delete</a>
+  </div>
+</div>
+
+<h5>{{ post.comments.count }} comment(s)</h5>
+<a class="btn btn-primary mb-4" href="{% url 'feed:comment_create' post.id %}" role="button">New comment</a>
+{% include "feed/comment_list.html" with objects=post %}
+
 {% endblock %}
