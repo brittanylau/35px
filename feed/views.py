@@ -15,7 +15,7 @@ class PostDetail(DetailView):
 
 class PostCreate(CreateView):
     model = Post
-    fields = [ 'image', 'title', 'caption', 'taken_on' ]
+    fields = [ 'user', 'image', 'title', 'caption', 'taken_on' ]
 
 class PostUpdate(UpdateView):
     model = Post
@@ -33,11 +33,11 @@ class CommentList(ListView):
 
 class CommentCreate(CreateView):
     model = Comment
-    fields = [ 'post', 'commenter', 'text' ]
+    fields = [ 'user', 'post', 'text' ]
 
 class CommentUpdate(UpdateView):
     model = Comment
-    fields = [ 'commenter', 'text' ]
+    fields = [ 'user', 'text' ]
 
 class CommentDelete(DeleteView):
     model = Comment
