@@ -12,14 +12,23 @@ from django.urls import reverse
 class Post(models.Model):
     title = models.CharField(max_length=50)
     caption = models.CharField(max_length=200)
-    # image = models.FileField()
+    # image = models.ImageField()
     # photographer = models.ForeignKey(Photographer, on_delete=models.CASCADE)
     photographer = 'Brittany'
-    taken_on = models.DateTimeField('date taken')
-    posted_on = models.DateTimeField('date posted')
+    taken_on = models.DateField('date taken')
+    posted_on = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return self.title + ', taken by ' + self.photographer
 
     def get_absolute_url(self):
         return reverse('feed:post_list')
+
+class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    commenter = models.CharField(max_length=50)
+    text = models.CharField(max_length = 200)
+    posted_on = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.commenter + ' said \"' + self.text
