@@ -19,7 +19,7 @@ class PostCreate(CreateView):
 
 class PostUpdate(UpdateView):
     model = Post
-    fields = [ 'image', 'title', 'caption', 'taken_on' ]
+    fields = [ 'title', 'caption', 'taken_on' ]
 
 class PostDelete(DeleteView):
     model = Post
