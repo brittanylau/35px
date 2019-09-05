@@ -5,7 +5,7 @@
 <div class="card mb-4">
 
   <div class="card-header">
-    {{ post.user.name }}
+    <a href="{% url 'feed:user_list' %}">{{ post.user.name }}</a>
   </div>
 
   <a href="{% url 'feed:post_detail' post.id %}">

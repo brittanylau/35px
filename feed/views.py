@@ -1,14 +1,21 @@
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from .models import Post, Comment
+from django.shortcuts import get_object_or_404
+from .models import User, Post, Comment
+
+class UserList(ListView):
+    model = User
+    ordering = ['name']
+
+class UserDetail(DetailView):
+    model = User
 
 # POSTS
 
 class PostList(ListView):
     model = Post
     ordering = ['-posted_on']
-    paginate_by = 20
 
 class PostDetail(DetailView):
     model = Post
