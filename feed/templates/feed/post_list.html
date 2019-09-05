@@ -15,7 +15,10 @@
   <div class="card-body">
     <h2 class=card-title>{{ post.title }}</h2>
     <p class=card-text>{{ post.caption }}</p>
-    <a href="{% url 'feed:post_detail' pk=post.pk %}">{{ post.comments.count }} comment(s)</a>
+    {% for tag in post.tags.all %}
+      <span class="badge badge-primary mb-3">{{ tag.name }}</span>
+    {% endfor %}
+    <p><a href="{% url 'feed:post_detail' pk=post.pk %}">{{ post.comments.count }} comment(s)</a></p>
   </div>
 
   <div class="card-footer">
