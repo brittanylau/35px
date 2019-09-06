@@ -2,7 +2,3 @@
     width: 600px;
     max-width: 100%;
 }
-
-.card-columns {
-  column-count: 3;
-}
