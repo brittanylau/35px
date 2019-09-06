@@ -21,7 +21,8 @@
   <a href="{% url 'feed:post_detail' post.id %}">
     <img src="{{ post.image.url }}" alt="{{ post.title }}" class="card-img-top">
   </a>
-
+  
+  <!--
   <div class="card-body">
     <h2 class=card-title>{{ post.title }}</h2>
     <p class=card-text>{{ post.caption }}</p>
@@ -31,6 +32,7 @@
       </span>
     {% endfor %}
   </div>
+  -->
 
   <div class="card-footer">
     <a href="{% url 'feed:post_detail' post.id %}" class="text-muted">{{ post.posted_on|timesince }} ago</a>
