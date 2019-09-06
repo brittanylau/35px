@@ -77,13 +77,13 @@ class Post(models.Model):
     # Gear
     image = models.ImageField(upload_to='posts')
     camera = models.ForeignKey(
-        Camera, related_name='photos', on_delete=models.PROTECT, null=True, blank=True
+        Camera, related_name='posts', on_delete=models.PROTECT, null=True, blank=True
     )
     film = models.ForeignKey(
-        Film, related_name='photos', on_delete=models.PROTECT, null=True, blank=True
+        Film, related_name='posts', on_delete=models.PROTECT, null=True, blank=True
     )
     lens = models.ForeignKey(
-        Lens, related_name='photos', on_delete=models.PROTECT, null=True, blank=True
+        Lens, related_name='posts', on_delete=models.PROTECT, null=True, blank=True
     )
 
     # Capture data

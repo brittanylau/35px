@@ -7,25 +7,25 @@
   <img src="{{ post.image.url }}" alt="{{ post.title }}" class="card-img-top">
 
   <div class="card-body">
-    <h2 class=card-title>{{ post.title }}</h2>
+    <h2 class="card-title">{{ post.title }}</h2>
     <p>
-      by <a class='text-dark' href="{% url 'feed:user_detail' post.user.id %}">{{ post.user.name }}</a>
+      by <a class="text-dark" href="{% url 'feed:user_detail' post.user.id %}">{{ post.user.name }}</a>
     </p>
 
     <hr>
-    <p class=card-text>{{ post.caption }}</p>
+    <p class="card-text">{{ post.caption }}</p>
     <div>
       {% if post.camera %}
         <span class="oi oi-camera-slr pr-2"></span>
-        {{ post.camera }}<br>
+        <a class="text-dark" href="{% url 'feed:camera_detail' post.camera.id %}">{{ post.camera }}</a><br>
       {% endif %}
       {% if post.film %}
         <span class="oi oi-box pr-2"></span>
-        {{ post.film }}<br>
+        <a class="text-dark" href="{% url 'feed:film_detail' post.film.id %}">{{ post.film }}</a><br>
       {% endif %}
       {% if post.lens %}
         <span class="oi oi-target pr-2"></span>
-        {{ post.lens }}<br>
+        <a class="text-dark" href="{% url 'feed:lens_detail' post.lens.id %}">{{ post.lens }}</a><br>
       {% endif %}
     </div>
 

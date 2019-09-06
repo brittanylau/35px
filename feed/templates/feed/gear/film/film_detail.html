@@ -1,0 +1,6 @@
+{% extends 'feed/base.html' %}
+
+{% block content %}
+<h1 class=mb-4>{{ film.brand }} {{ film.name }}</h1>
+{% include "feed/posts/post_list_template.html" %}
+{% endblock %}
