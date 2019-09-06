@@ -45,12 +45,12 @@ class PostDetail(DetailView):
 class PostCreate(CreateView):
     model = Post
     fields = [ 'user', 'image', 'title', 'caption', 'taken_on', 'tags' ]
-    template_name=POST_TEMPLATE_DIR + "post_form.html"
+    template_name=POST_TEMPLATE_DIR + "post_create.html"
 
 class PostUpdate(UpdateView):
     model = Post
     fields = [ 'title', 'caption', 'taken_on', 'tags' ]
-    template_name=POST_TEMPLATE_DIR + "post_form.html"
+    template_name=POST_TEMPLATE_DIR + "post_edit.html"
 
 class PostDelete(DeleteView):
     model = Post
@@ -61,18 +61,18 @@ class PostDelete(DeleteView):
 
 class CommentList(ListView):
     model = Comment
-    ordering = ['posted_on']
+    ordering = ['-posted_on']
     template_name=COMMENT_TEMPLATE_DIR + 'comment_list.html'
 
 class CommentCreate(CreateView):
     model = Comment
     fields = [ 'user', 'post', 'text' ]
-    template_name=COMMENT_TEMPLATE_DIR + "comment_form.html"
+    template_name=COMMENT_TEMPLATE_DIR + "comment_create.html"
 
 class CommentUpdate(UpdateView):
     model = Comment
     fields = [ 'user', 'text' ]
-    template_name=COMMENT_TEMPLATE_DIR + "comment_form.html"
+    template_name=COMMENT_TEMPLATE_DIR + "comment_edit.html"
 
 class CommentDelete(DeleteView):
     model = Comment

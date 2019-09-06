@@ -1,9 +1,9 @@
 {% extends 'feed/base.html' %}
 
 {% block content %}
-<h1 class="mb-4">New/update comment</h1>
-
-<form method="post">
+<h1 class="mb-4">Edit post</h1>
+<img class="post-form-photo mb-4" src="{{ post.image.url }}" alt="{{ post.title }}">
+<form method="post" enctype="multipart/form-data">
   {% csrf_token %}
   {{ form.as_p }}
   <input class="btn btn-primary" type="submit" value="Submit"/>
