@@ -23,7 +23,7 @@ class Post(models.Model):
     image = models.ImageField(upload_to='posts')
     taken_on = models.DateField('date taken')
     posted_on = models.DateTimeField(auto_now=True)
-    tags = models.ManyToManyField(Tag, related_name='tags')
+    tags = models.ManyToManyField(Tag, related_name='posts')
 
     def __str__(self):
         return self.title + ', taken by ' + self.user.name

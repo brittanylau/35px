@@ -25,10 +25,12 @@ class UserDetail(DetailView):
 
 class TagList(ListView):
     model = Tag
-    ordering = [] # popularity of tag
+    ordering = ['name'] # popularity of tag
+    template_name=TAG_TEMPLATE_DIR + "tag_list.html"
 
 class TagDetail(DetailView):
     model = Tag
+    template_name=TAG_TEMPLATE_DIR + "tag_detail.html"
 
 # POSTS
 
@@ -43,12 +45,12 @@ class PostDetail(DetailView):
 
 class PostCreate(CreateView):
     model = Post
-    fields = [ 'user', 'image', 'title', 'caption', 'taken_on' ]
+    fields = [ 'user', 'image', 'title', 'caption', 'taken_on', 'tags' ]
     template_name=POST_TEMPLATE_DIR + "post_form.html"
 
 class PostUpdate(UpdateView):
     model = Post
-    fields = [ 'title', 'caption', 'taken_on' ]
+    fields = [ 'title', 'caption', 'taken_on', 'tags' ]
     template_name=POST_TEMPLATE_DIR + "post_form.html"
 
 class PostDelete(DeleteView):
