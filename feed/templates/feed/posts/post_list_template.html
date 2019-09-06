@@ -30,9 +30,6 @@
         <a class='text-white' href="{% url 'feed:tag_detail' tag.id %}">{{ tag.name }}</a>
       </span>
     {% endfor %}
-    <p class="mb-0">
-      <a href="{% url 'feed:post_detail' pk=post.pk %}">{{ post.comments.count }} comment(s)</a>
-    </p>
   </div>
 
   <div class="card-footer">

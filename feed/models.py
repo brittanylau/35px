@@ -1,14 +1,21 @@
 from django.db import models
 from django.urls import reverse
 
-# Create your models here.
+# SOCIAL =======================================================================
 
 class User(models.Model):
     name = models.CharField(max_length=20)
-    location = models.CharField(max_length=20)
 
     def __str__(self):
         return self.name
+
+class Location(models.Model):
+    name = models.CharField(max_length=50, null=True)
+    city = models.CharField(max_length=50, null=True)
+    country = models.CharField(max_length=50, null=True)
+
+    def __str__(self):
+        return self.name + ' in ' + self.city + ', ' + self.country
 
 class Tag(models.Model):
     name = models.CharField(max_length=20)
@@ -16,14 +23,106 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
 
+# GEAR =========================================================================
+
+class Brand(models.Model):
+    name = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.name
+
+class Camera(models.Model):
+    brand = models.ForeignKey(
+        Brand, related_name='cameras', on_delete=models.PROTECT, null=True
+    )
+    name = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.brand.name + ' ' + self.name
+
+class Film(models.Model):
+    brand = models.ForeignKey(
+        Brand, related_name='film', on_delete=models.PROTECT, null=True
+    )
+    name = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.brand.name + ' ' + self.name
+
+class Lens(models.Model):
+    brand = models.ForeignKey(
+        Brand, related_name='lenses', on_delete=models.PROTECT, null=True
+    )
+    name = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.brand.name + ' ' + self.name
+
+# POSTS ========================================================================
+
 class Post(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts', null=True, blank=True)
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='posts', null=True
+    )
+
     title = models.CharField(max_length=50)
     caption = models.CharField(max_length=200)
-    image = models.ImageField(upload_to='posts')
+
     taken_on = models.DateField('date taken')
     posted_on = models.DateTimeField(auto_now=True)
+
+    location = models.ForeignKey(
+        Location, related_name='posts', on_delete=models.PROTECT, null=True)
     tags = models.ManyToManyField(Tag, related_name='posts')
+
+    # Equipment
+    image = models.ImageField(upload_to='posts')
+    camera = models.ForeignKey(
+        Camera, related_name='photos', on_delete=models.PROTECT, null=True
+    )
+    film = models.ForeignKey(
+        Film, related_name='photos', on_delete=models.PROTECT, null=True
+    )
+    lens = models.ForeignKey(
+        Lens, related_name='photos', on_delete=models.PROTECT, null=True
+    )
+
+    APERTURES=(
+        (1.4, '1.4'),
+        (2,   '2'),
+        (2.8, '2.8'),
+        (4,   '4'),
+        (5.6, '5'),
+        (8,   '8'),
+        (11,  '11'),
+        (16,  '16'),
+        (22,   '22'),
+    )
+    SHUTTER_SPEEDS=(
+        (1,    '1'),
+        (2,    '1/2'),
+        (4,    '1/4'),
+        (8,    '1/8'),
+        (15,   '1/15'),
+        (30,   '1/30'),
+        (60,   '1/60'),
+        (125,  '1/125'),
+        (250,  '1/250'),
+        (500,  '1/500'),
+        (1000, '1/1000'),
+        (2000, '1/2000'),
+        (4000, '1/4000'),
+    )
+    EXPOSURES=(
+        (100, '100'),
+        (200, '200'),
+        (400, '400'),
+        (800, '800'),
+        (1600, '1600'),
+    )
+    aperture = models.DecimalField(choices=APERTURES, max_digits=2, decimal_places=1, null=True)
+    shutter_speed = models.PositiveIntegerField(choices=SHUTTER_SPEEDS, null=True) # in seconds
+    exposure = models.PositiveIntegerField(choices=EXPOSURES, null=True)
 
     def __str__(self):
         return self.title + ', taken by ' + self.user.name
@@ -32,8 +131,12 @@ class Post(models.Model):
         return reverse('feed:post_list')
 
 class Comment(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comments', null=True, blank=True)
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE, related_name='comments', null=True
+    )
+    post = models.ForeignKey(
+        Post, on_delete=models.CASCADE, related_name='comments'
+    )
 
     text = models.CharField(max_length = 200)
     posted_on = models.DateTimeField(auto_now=True)

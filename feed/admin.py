@@ -1,9 +1,14 @@
 from django.contrib import admin
-from .models import User, Tag, Post, Comment
+from .models import User, Location, Tag, Brand, Camera, Film, Post, Comment
 
-# Register your models here.
-class UserAdmin(admin.ModelAdmin):
-    list_display = ('name', 'location')
+class LocationAdmin(admin.ModelAdmin):
+    list_display = ('name', 'city', 'country')
+    
+class CameraAdmin(admin.ModelAdmin):
+    list_display = ('brand', 'name')
+
+class FilmAdmin(admin.ModelAdmin):
+    list_display = ('brand', 'name')
 
 class PostAdmin(admin.ModelAdmin):
     list_display = ('user', 'posted_on', 'title', 'caption')
@@ -13,7 +18,11 @@ class PostAdmin(admin.ModelAdmin):
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('user', 'post', 'text', 'posted_on')
 
-admin.site.register(User, UserAdmin)
-admin.site.register(Tag)
+admin.site.register(User)
+admin.site.register(Camera, CameraAdmin)
+admin.site.register(Film, FilmAdmin)
 admin.site.register(Post, PostAdmin)
 admin.site.register(Comment, CommentAdmin)
+admin.site.register(Tag)
+admin.site.register(Brand)
+admin.site.register(Location, LocationAdmin)
