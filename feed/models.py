@@ -10,15 +10,14 @@ class User(models.Model):
         return self.name
 
 class Location(models.Model):
-    name = models.CharField(max_length=50, null=True)
-    city = models.CharField(max_length=50, null=True)
-    country = models.CharField(max_length=50, null=True)
+    city = models.CharField(max_length=50, null=True, blank=True)
+    country = models.CharField(max_length=50, null=True, blank=True)
 
     def __str__(self):
-        return self.name + ' in ' + self.city + ', ' + self.country
+        return self.city + ', ' + self.country
 
 class Tag(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=20, null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -78,13 +77,13 @@ class Post(models.Model):
     # Equipment
     image = models.ImageField(upload_to='posts')
     camera = models.ForeignKey(
-        Camera, related_name='photos', on_delete=models.PROTECT, null=True
+        Camera, related_name='photos', on_delete=models.PROTECT, null=True, blank=True
     )
     film = models.ForeignKey(
-        Film, related_name='photos', on_delete=models.PROTECT, null=True
+        Film, related_name='photos', on_delete=models.PROTECT, null=True, blank=True
     )
     lens = models.ForeignKey(
-        Lens, related_name='photos', on_delete=models.PROTECT, null=True
+        Lens, related_name='photos', on_delete=models.PROTECT, null=True, blank=True
     )
 
     APERTURES=(
@@ -120,9 +119,9 @@ class Post(models.Model):
         (800, '800'),
         (1600, '1600'),
     )
-    aperture = models.DecimalField(choices=APERTURES, max_digits=2, decimal_places=1, null=True)
-    shutter_speed = models.PositiveIntegerField(choices=SHUTTER_SPEEDS, null=True) # in seconds
-    exposure = models.PositiveIntegerField(choices=EXPOSURES, null=True)
+    aperture = models.DecimalField(choices=APERTURES, max_digits=2, decimal_places=1, null=True, blank=True)
+    shutter_speed = models.PositiveIntegerField(choices=SHUTTER_SPEEDS, null=True, blank=True) # in seconds
+    exposure = models.PositiveIntegerField(choices=EXPOSURES, null=True, blank=True)
 
     def __str__(self):
         return self.title + ', taken by ' + self.user.name

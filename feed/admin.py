@@ -2,8 +2,8 @@ from django.contrib import admin
 from .models import User, Location, Tag, Brand, Camera, Film, Post, Comment
 
 class LocationAdmin(admin.ModelAdmin):
-    list_display = ('name', 'city', 'country')
-    
+    list_display = ('city', 'country')
+
 class CameraAdmin(admin.ModelAdmin):
     list_display = ('brand', 'name')
 
