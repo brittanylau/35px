@@ -3,7 +3,7 @@
 {% block content %}
 <div class="card mb-5">
   <div class="card-header">
-    {{ post.user.name }}
+    <a href="{% url 'feed:user_detail' post.user.id %}">{{ post.user.name }}</a>
   </div>
 
   <img src="{{ post.image.url }}" alt="{{ post.title }}" class="card-img-top">

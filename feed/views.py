@@ -11,7 +11,6 @@ COMMENT_TEMPLATE_DIR="feed/comments/"
 
 # USERS
 
-
 class UserList(ListView):
     model = User
     ordering = ['name']
