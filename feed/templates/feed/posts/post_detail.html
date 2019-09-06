@@ -25,6 +25,6 @@
 
 <h5>{{ post.comments.count }} comment(s)</h5>
 <a class="btn btn-primary mb-4" href="{% url 'feed:comment_create' post.id %}" role="button">New comment</a>
-{% include "feed/comment_list.html" with objects=post %}
+{% include "feed/comments/comment_list.html" with objects=post %}
 
 {% endblock %}

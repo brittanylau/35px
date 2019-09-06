@@ -6,8 +6,8 @@ app_name = 'feed'
 urlpatterns = [
 
     # USERS
-    path('users',           views.UserList.as_view(), name='user_list'),
-    path('user/<int:pk>',   views.UserDetail.as_view(), name='user_detail'),
+    path('users',           views.UserList.as_view(),     name='user_list'),
+    path('user/<int:pk>',   views.UserDetail.as_view(),   name='user_detail'),
 
     # POSTS
     path('',                views.PostList.as_view(),     name='post_list'),
