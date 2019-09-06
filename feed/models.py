@@ -74,7 +74,7 @@ class Post(models.Model):
         Location, related_name='posts', on_delete=models.PROTECT, null=True)
     tags = models.ManyToManyField(Tag, related_name='posts')
 
-    # Equipment
+    # Gear
     image = models.ImageField(upload_to='posts')
     camera = models.ForeignKey(
         Camera, related_name='photos', on_delete=models.PROTECT, null=True, blank=True
@@ -86,6 +86,7 @@ class Post(models.Model):
         Lens, related_name='photos', on_delete=models.PROTECT, null=True, blank=True
     )
 
+    # Capture data
     APERTURES=(
         (1.4, '1.4'),
         (2,   '2'),
