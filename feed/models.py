@@ -60,6 +60,10 @@ class Lens(models.Model):
 # POSTS ========================================================================
 
 class Post(models.Model):
+
+    class Meta:
+        ordering = ['-posted_on']
+
     user = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name='posts', null=True
     )
@@ -128,7 +132,7 @@ class Post(models.Model):
         return self.title + ', taken by ' + self.user.name
 
     def get_absolute_url(self):
-        return reverse('feed:post_list')
+        return reverse('feed:post_detail', kwargs={'pk': self.id})
 
 class Comment(models.Model):
     user = models.ForeignKey(

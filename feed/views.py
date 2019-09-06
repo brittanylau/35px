@@ -62,12 +62,12 @@ class PostDetail(DetailView):
 
 class PostCreate(CreateView):
     model = Post
-    fields = [ 'user', 'image', 'title', 'caption', 'taken_on', 'tags' ]
+    fields = [ 'user', 'image', 'title', 'caption', 'taken_on', 'camera', 'film', 'lens', 'exposure', 'aperture', 'shutter_speed', 'tags' ]
     template_name = POST_TEMPLATE_DIR + "post_create.html"
 
 class PostUpdate(UpdateView):
     model = Post
-    fields = [ 'title', 'caption', 'taken_on', 'tags' ]
+    fields = [ 'title', 'caption', 'taken_on', 'camera', 'film', 'lens', 'exposure', 'aperture', 'shutter_speed', 'tags' ]
     template_name = POST_TEMPLATE_DIR + "post_edit.html"
 
 class PostDelete(DeleteView):
