@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1 class=mb-4>{{ camera.brand }} {{ camera.name }}</h1>
+<h1 class=mb-4>
+  {{ object.user.username }}'s profile
+</h1>
 {% include "feed/posts/post_list_template.html" %}
 {% endblock %}

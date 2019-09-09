@@ -1,4 +1,4 @@
-{% extends 'feed/base.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
 <h1 class="mb-4">
@@ -10,7 +10,7 @@
     <div class="card text-center m-3">
       <div class="card-body">
         <h5 class="card-title">
-          <a href="{% url 'feed:user_detail' profile.id %}">
+          <a href="{% url 'users:user_detail' profile.id %}">
             {{ profile.user.username }}
           </a>
         </h5>

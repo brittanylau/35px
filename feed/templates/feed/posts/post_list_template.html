@@ -2,7 +2,7 @@
 <div class="card mb-4">
   <div class="card-header bg-white d-flex justify-content-between align-items-center">
     
-    <a class='text-dark align-middle' href="{% url 'feed:user_detail' post.author.id %}">
+    <a class='text-dark align-middle' href="{% url 'users:user_detail' post.author.id %}">
       {{ post.author }}
     </a>
 

@@ -1,12 +1,9 @@
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
-from django.shortcuts import get_object_or_404
-from .models import UserProfile, Tag, Camera, Film, Lens, Post, Comment
+from .models import Tag, Camera, Film, Lens, Post, Comment
 
-TEMPLATE_DIR='feed/'
-AUTH_DIR='registration/'
+TEMPLATE_DIR = 'feed/'
 USER_TEMPLATE_DIR = TEMPLATE_DIR + 'users/'
 TAG_TEMPLATE_DIR = TEMPLATE_DIR + 'tags/'
 GEAR_TEMPLATE_DIR = TEMPLATE_DIR + 'gear/'
@@ -15,22 +12,6 @@ FILM_TEMPLATE_DIR = GEAR_TEMPLATE_DIR + 'film/'
 LENS_TEMPLATE_DIR = GEAR_TEMPLATE_DIR + 'lenses/'
 POST_TEMPLATE_DIR = TEMPLATE_DIR + 'posts/'
 COMMENT_TEMPLATE_DIR = TEMPLATE_DIR + 'comments/'
-
-# USERS
-
-class UserList(ListView):
-    model = UserProfile
-    # ordering = ['username']
-    template_name = USER_TEMPLATE_DIR + 'user_list.html'
-
-class UserDetail(DetailView):
-    model = UserProfile
-    template_name = USER_TEMPLATE_DIR + 'user_detail.html'
-
-class SignUp(CreateView):
-    form_class = UserCreationForm
-    success_url = reverse_lazy('login')
-    template_name = AUTH_DIR + 'signup.html'
 
 # TAGS
 
@@ -70,12 +51,12 @@ class PostDetail(DetailView):
 
 class PostCreate(CreateView):
     model = Post
-    fields = [ 'image', 'title', 'caption', 'taken_on', 'camera', 'film', 'lens', 'exposure', 'aperture', 'shutter_speed', 'tags' ]
+    fields = [ 'author', 'image', 'title', 'caption', 'taken_on', 'camera', 'film', 'lens', 'exposure', 'aperture', 'shutter_speed', 'tags' ]
     template_name = POST_TEMPLATE_DIR + 'post_create.html'
 
-    def form_valid(self, form):
-        form.instance.author = self.request.user.profile
-        return super(CommentCreate, self).form_valid(form)
+    #def form_valid(self, form):
+    #    form.instance.author = self.request.user.profile
+    #    return super(CommentCreate, self).form_valid(form)
 
 class PostUpdate(UpdateView):
     model = Post

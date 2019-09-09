@@ -1,18 +1,6 @@
 from django.db import models
 from django.urls import reverse
-from django.contrib.auth.models import User
-
-
-class UserProfile(models.Model):
-    user = models.OneToOneField(
-        User,
-        related_name='profile',
-        on_delete=models.CASCADE,
-        null=True, blank=True
-    )
-
-    def __str__(self):
-        return self.user.username
+from users.models import UserProfile
 
 
 class Tag(models.Model):
