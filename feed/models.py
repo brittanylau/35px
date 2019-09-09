@@ -127,12 +127,12 @@ class Post(models.Model):
         (800, '800'),
         (1600, '1600'),
     )
-    aperture = models.DecimalField(choices=APERTURES, max_digits=2, decimal_places=1, null=True, blank=True)
+    aperture = models.DecimalField(choices=APERTURES, max_digits=3, decimal_places=1, null=True, blank=True)
     shutter_speed = models.PositiveIntegerField(choices=SHUTTER_SPEEDS, null=True, blank=True) # in seconds
     exposure = models.PositiveIntegerField(choices=EXPOSURES, null=True, blank=True)
 
     def __str__(self):
-        return self.title + ', taken by ' + self.author.name
+        return self.title + ', taken by ' + self.author.user.username
 
     def get_absolute_url(self):
         return reverse('feed:post_detail', kwargs={'pk': self.id})
@@ -149,7 +149,7 @@ class Comment(models.Model):
     posted_on = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.author.name + ' said \"' + self.text
+        return self.author + ' said \"' + self.text
 
     def get_absolute_url(self):
         return reverse('feed:post_detail', kwargs={'pk': self.post.id})

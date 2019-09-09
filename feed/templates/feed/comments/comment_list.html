@@ -4,7 +4,9 @@
       <li class="list-group-item">
 
         <strong>
-          <a class="text-dark" href="{% url 'feed:user_detail' comment.user.id %}">{{ comment.user.name }}</a>
+          <a class="text-dark" href="{% url 'feed:user_detail' comment.author.id %}">
+            {{ comment.author }}
+          </a>
         </strong>
         <slot class="text-muted"> • {{ comment.posted_on|timesince }} ago</slot>
 
