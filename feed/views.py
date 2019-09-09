@@ -2,6 +2,7 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
+from django.shortcuts import get_object_or_404
 from .models import UserProfile, Tag, Camera, Film, Lens, Post, Comment
 
 TEMPLATE_DIR='feed/'
@@ -69,8 +70,12 @@ class PostDetail(DetailView):
 
 class PostCreate(CreateView):
     model = Post
-    fields = [ 'author', 'image', 'title', 'caption', 'taken_on', 'camera', 'film', 'lens', 'exposure', 'aperture', 'shutter_speed', 'tags' ]
+    fields = [ 'image', 'title', 'caption', 'taken_on', 'camera', 'film', 'lens', 'exposure', 'aperture', 'shutter_speed', 'tags' ]
     template_name = POST_TEMPLATE_DIR + 'post_create.html'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user.profile
+        return super(CommentCreate, self).form_valid(form)
 
 class PostUpdate(UpdateView):
     model = Post
@@ -91,8 +96,12 @@ class CommentList(ListView):
 
 class CommentCreate(CreateView):
     model = Comment
-    fields = [ 'author', 'post', 'text' ]
+    fields = [ 'post', 'text' ]
     template_name = COMMENT_TEMPLATE_DIR + 'comment_create.html'
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user.profile
+        return super(CommentCreate, self).form_valid(form)
 
 class CommentUpdate(UpdateView):
     model = Comment
