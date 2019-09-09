@@ -6,17 +6,17 @@
 </h1>
 
 <div class="card-columns">
-  {% for user in object_list %}
+  {% for profile in object_list %}
     <div class="card text-center m-3">
       <div class="card-body">
         <h5 class="card-title">
-          <a href="{% url 'feed:user_detail' user.id %}">
-            {{ user.name }}
+          <a href="{% url 'feed:user_detail' profile.id %}">
+            {{ profile.user.username }}
           </a>
         </h5>
         <p class="card-text">
           <small>
-            {{ user.posts.count }} posts
+            {{ profile.posts.count }} posts
           </small>
         </p>
       </div>

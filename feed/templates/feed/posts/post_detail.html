@@ -10,7 +10,7 @@
       {{ post.title }}
     </h2>
     <p>
-      by <a href="{% url 'feed:user_detail' post.user.id %}">{{ post.user.name }}</a>
+      by <a href="{% url 'feed:user_detail' post.author.id %}">{{ post.author}}</a>
     </p>
     <hr>
     <p class="card-text">{{ post.caption }}</p>

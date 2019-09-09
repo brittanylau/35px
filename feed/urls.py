@@ -1,6 +1,5 @@
 from django.urls import path, include
 from . import views
-from django.views.generic.base import TemplateView
 
 app_name = 'feed'
 
@@ -12,7 +11,6 @@ urlpatterns = [
     path('users',         views.UserList.as_view(),     name='user_list'),
     path('user/<int:pk>', views.UserDetail.as_view(),   name='user_detail'),
     path('signup/', views.SignUp.as_view(), name='signup'),
-    path('profile/', TemplateView.as_view(template_name='feed/users/profile.html'), name='profile'),
 
     # TAGS
     path('tags',          views.TagList.as_view(),      name='tag_list'),

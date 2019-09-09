@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, Location, Tag, Brand, Camera, Film, Lens, Post, Comment
+from .models import UserProfile, Location, Tag, Brand, Camera, Film, Lens, Post, Comment
 
 class LocationAdmin(admin.ModelAdmin):
     list_display = ('city', 'country')
@@ -14,14 +14,14 @@ class LensAdmin(admin.ModelAdmin):
     list_display = ('brand', 'name')
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('user', 'posted_on', 'title', 'caption')
+    list_display = ('author', 'posted_on', 'title', 'caption')
     list_filter = ()
-    search_fields = ['title', 'user']
+    search_fields = ['title', 'author']
 
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('user', 'post', 'text', 'posted_on')
+    list_display = ('author', 'post', 'text', 'posted_on')
 
-admin.site.register(User)
+admin.site.register(UserProfile)
 admin.site.register(Camera, CameraAdmin)
 admin.site.register(Film, FilmAdmin)
 admin.site.register(Lens, LensAdmin)

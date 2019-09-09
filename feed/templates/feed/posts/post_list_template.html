@@ -1,7 +1,10 @@
 {% for post in object.posts.all %}
 <div class="card mb-4">
   <div class="card-header bg-white d-flex justify-content-between align-items-center">
-    <a class='text-dark' href="{% url 'feed:user_detail' post.user.id %}">{{ post.user.name }}</a>
+    
+    <a class='text-dark align-middle' href="{% url 'feed:user_detail' post.author.id %}">
+      {{ post.author }}
+    </a>
 
     <!-- MENU -->
     <div>

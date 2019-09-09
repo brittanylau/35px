@@ -1,13 +1,16 @@
 from django.db import models
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 # SOCIAL =======================================================================
 
-class User(models.Model):
-    name = models.CharField(max_length=20)
+class UserProfile(models.Model):
+    user = models.OneToOneField(
+        User, related_name='profile', on_delete=models.CASCADE, null=True, blank=True
+    )
 
     def __str__(self):
-        return self.name
+        return self.user.username
 
 class Location(models.Model):
     city = models.CharField(max_length=50, null=True, blank=True)
@@ -64,8 +67,8 @@ class Post(models.Model):
     class Meta:
         ordering = ['-posted_on']
 
-    user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='posts', null=True
+    author = models.ForeignKey(
+        UserProfile, on_delete=models.CASCADE, related_name='posts', null=True
     )
 
     title = models.CharField(max_length=50)
@@ -129,14 +132,14 @@ class Post(models.Model):
     exposure = models.PositiveIntegerField(choices=EXPOSURES, null=True, blank=True)
 
     def __str__(self):
-        return self.title + ', taken by ' + self.user.name
+        return self.title + ', taken by ' + self.author.name
 
     def get_absolute_url(self):
         return reverse('feed:post_detail', kwargs={'pk': self.id})
 
 class Comment(models.Model):
-    user = models.ForeignKey(
-        User, on_delete=models.CASCADE, related_name='comments', null=True
+    author = models.ForeignKey(
+        UserProfile, on_delete=models.CASCADE, related_name='comments', null=True
     )
     post = models.ForeignKey(
         Post, on_delete=models.CASCADE, related_name='comments'
@@ -146,7 +149,7 @@ class Comment(models.Model):
     posted_on = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.user.name + ' said \"' + self.text
+        return self.author.name + ' said \"' + self.text
 
     def get_absolute_url(self):
         return reverse('feed:post_detail', kwargs={'pk': self.post.id})

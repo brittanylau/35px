@@ -38,7 +38,7 @@
               <div class="btn-group">
                 <a
                   class="btn btn-outline-primary"
-                  href="{% url 'feed:profile' %}"
+                  href="{% url 'feed:user_detail' user.profile.id %}"
                   role="button"
                 >
                   {{ user.username }}

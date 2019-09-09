@@ -13,8 +13,8 @@
     <!-- HEADER -->
     <div class="card-header bg-white d-flex justify-content-between align-items-center">
 
-      <a class='text-dark align-middle' href="{% url 'feed:user_detail' post.user.id %}">
-        {{ post.user.name }}
+      <a class='text-dark align-middle' href="{% url 'feed:user_detail' post.author.id %}">
+        {{ post.author }}
       </a>
 
       <!-- MENU -->

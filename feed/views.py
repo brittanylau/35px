@@ -2,7 +2,7 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
-from .models import User, Tag, Camera, Film, Lens, Post, Comment
+from .models import UserProfile, Tag, Camera, Film, Lens, Post, Comment
 
 TEMPLATE_DIR='feed/'
 AUTH_DIR='registration/'
@@ -18,12 +18,12 @@ COMMENT_TEMPLATE_DIR = TEMPLATE_DIR + 'comments/'
 # USERS
 
 class UserList(ListView):
-    model = User
-    ordering = ['name']
+    model = UserProfile
+    # ordering = ['username']
     template_name = USER_TEMPLATE_DIR + 'user_list.html'
 
 class UserDetail(DetailView):
-    model = User
+    model = UserProfile
     template_name = USER_TEMPLATE_DIR + 'user_detail.html'
 
 class SignUp(CreateView):
@@ -69,7 +69,7 @@ class PostDetail(DetailView):
 
 class PostCreate(CreateView):
     model = Post
-    fields = [ 'user', 'image', 'title', 'caption', 'taken_on', 'camera', 'film', 'lens', 'exposure', 'aperture', 'shutter_speed', 'tags' ]
+    fields = [ 'author', 'image', 'title', 'caption', 'taken_on', 'camera', 'film', 'lens', 'exposure', 'aperture', 'shutter_speed', 'tags' ]
     template_name = POST_TEMPLATE_DIR + 'post_create.html'
 
 class PostUpdate(UpdateView):
@@ -91,12 +91,12 @@ class CommentList(ListView):
 
 class CommentCreate(CreateView):
     model = Comment
-    fields = [ 'user', 'post', 'text' ]
+    fields = [ 'author', 'post', 'text' ]
     template_name = COMMENT_TEMPLATE_DIR + 'comment_create.html'
 
 class CommentUpdate(UpdateView):
     model = Comment
-    fields = [ 'user', 'text' ]
+    fields = [ 'author', 'text' ]
     template_name = COMMENT_TEMPLATE_DIR + 'comment_edit.html'
 
 class CommentDelete(DeleteView):
