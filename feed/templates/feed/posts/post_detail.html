@@ -3,26 +3,34 @@
 {% block content %}
 <div class="card mb-5">
 
-
   <img src="{{ post.image.url }}" alt="{{ post.title }}" class="card-img-top">
 
   <div class="card-body">
-    <h2 class="card-title">{{ post.title }}</h2>
+    <h2 class="card-title">
+      {{ post.title }}
+    </h2>
     <p>
       by <a href="{% url 'feed:user_detail' post.user.id %}">{{ post.user.name }}</a>
     </p>
-
     <hr>
     <p class="card-text">{{ post.caption }}</p>
+
+    <!-- CAPTURE DATA -->
     <div class="mb-4">
       <span class="oi oi-camera-slr pr-2"></span>
-      <a class="text-dark" href="{% url 'feed:camera_detail' post.camera.id %}">{{ post.camera }}</a><br>
+      <a class="text-dark" href="{% url 'feed:camera_detail' post.camera.id %}">
+        {{ post.camera }}
+      </a><br>
 
       <span class="oi oi-box pr-2"></span>
-      <a class="text-dark" href="{% url 'feed:film_detail' post.film.id %}">{{ post.film }}</a><br>
+      <a class="text-dark" href="{% url 'feed:film_detail' post.film.id %}">
+        {{ post.film }}
+      </a><br>
 
       <span class="oi oi-target pr-2"></span>
-      <a class="text-dark" href="{% url 'feed:lens_detail' post.lens.id %}">{{ post.lens }}</a><br>
+      <a class="text-dark" href="{% url 'feed:lens_detail' post.lens.id %}">
+        {{ post.lens }}
+      </a><br>
 
       <span class="oi oi-aperture pr-2"></span>
       <span class="pr-3">{{ post.shutter_speed }}mm</span>
@@ -30,9 +38,12 @@
       <span class="pr-3">ISO {{ post.exposure }}</span>
     </div>
 
+    <!-- TAGS -->
     {% for tag in post.tags.all %}
       <span class="badge badge-primary mb-0 mr-1">
-        <a class='text-white' href="{% url 'feed:tag_detail' tag.id %}">{{ tag.name }}</a>
+        <a class='text-white' href="{% url 'feed:tag_detail' tag.id %}">
+          {{ tag.name }}
+        </a>
       </span>
     {% endfor %}
   </div>
@@ -42,14 +53,26 @@
       {{ post.posted_on|timesince }} ago
     </a>
     <div class="float-right">
-      <a class="text-muted" href="{% url 'feed:post_edit'   post.id %}">Edit</a>
-      <a class="text-muted" href="{% url 'feed:post_delete' post.id %}">Delete</a>
+      <a class="text-muted" href="{% url 'feed:post_edit' post.id %}">
+        Edit
+      </a>
+      <a class="text-muted" href="{% url 'feed:post_delete' post.id %}">
+        Delete
+      </a>
     </div>
   </div>
 </div>
 
-<h5 class="mb-3">{{ post.comments.count }} comment(s)</h5>
-<a class="btn btn-outline-primary mb-4" href="{% url 'feed:comment_create' post.id %}" role="button">New comment</a>
-{% include "feed/comments/comment_list.html" with objects=post %}
+<!-- COMMENTS -->
+
+<div>
+  <h5 class="mb-3">
+    {{ post.comments.count }} comment(s)
+  </h5>
+  <a class="btn btn-outline-primary mb-4" href="{% url 'feed:comment_create' post.id %}" role="button">
+    New comment
+  </a>
+  {% include "feed/comments/comment_list.html" with objects=post %}
+</div>
 
 {% endblock %}

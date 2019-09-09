@@ -29,18 +29,6 @@
     <img src="{{ post.image.url }}" alt="{{ post.title }}" class="card-img-top">
   </a>
 
-  <!--
-  <div class="card-body">
-    <h2 class=card-title>{{ post.title }}</h2>
-    <p class=card-text>{{ post.caption }}</p>
-    {% for tag in post.tags.all %}
-      <span class="badge badge-dark mb-0">
-        <a class='text-white' href="{% url 'feed:tag_detail' tag.id %}">{{ tag.name }}</a>
-      </span>
-    {% endfor %}
-  </div>
-  -->
-
   <div class="card-footer">
     <a href="{% url 'feed:post_detail' post.id %}" class="text-muted">{{ post.posted_on|timesince }} ago</a>
   </div>

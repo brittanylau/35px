@@ -10,6 +10,7 @@ urlpatterns = [
     # USERS
     path('users',         views.UserList.as_view(),     name='user_list'),
     path('user/<int:pk>', views.UserDetail.as_view(),   name='user_detail'),
+    path('signup/', views.SignUp.as_view(), name='signup'),
 
     # TAGS
     path('tags',          views.TagList.as_view(),      name='tag_list'),
