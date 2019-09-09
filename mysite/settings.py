@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'feed.apps.FeedConfig',
     'users.apps.UsersConfig',
+    'gear.apps.GearConfig',
     'django.contrib.admin',         # admin site
     'django.contrib.auth',          # authentication system
     'django.contrib.contenttypes',  # framework for content types

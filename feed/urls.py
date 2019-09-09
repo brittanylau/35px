@@ -11,11 +11,6 @@ urlpatterns = [
     path('tags',          views.TagList.as_view(),      name='tag_list'),
     path('tag/<int:pk>',  views.TagDetail.as_view(),    name='tag_detail'),
 
-    # GEAR
-    path('camera/<int:pk>', views.CameraDetail.as_view(), name='camera_detail'),
-    path('film/<int:pk>',   views.FilmDetail.as_view(),   name='film_detail'),
-    path('lens/<int:pk>',   views.LensDetail.as_view(),   name='lens_detail'),
-
     # POSTS
     path('post/<int:pk>',        views.PostDetail.as_view(),   name='post_detail'),
     path('post/create',          views.PostCreate.as_view(),   name='post_create'),

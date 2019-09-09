@@ -18,17 +18,17 @@
     <!-- CAPTURE DATA -->
     <div class="mb-4">
       <span class="oi oi-camera-slr pr-2"></span>
-      <a class="text-dark" href="{% url 'feed:camera_detail' post.camera.id %}">
+      <a class="text-dark" href="{% url 'gear:camera_detail' post.camera.id %}">
         {{ post.camera }}
       </a><br>
 
       <span class="oi oi-box pr-2"></span>
-      <a class="text-dark" href="{% url 'feed:film_detail' post.film.id %}">
+      <a class="text-dark" href="{% url 'gear:film_detail' post.film.id %}">
         {{ post.film }}
       </a><br>
 
       <span class="oi oi-target pr-2"></span>
-      <a class="text-dark" href="{% url 'feed:lens_detail' post.lens.id %}">
+      <a class="text-dark" href="{% url 'gear:lens_detail' post.lens.id %}">
         {{ post.lens }}
       </a><br>
 

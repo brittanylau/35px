@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from users.models import UserProfile
+from gear.models import Camera, Film, Lens
 
 
 class Tag(models.Model):
@@ -8,43 +9,6 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
-
-
-class Brand(models.Model):
-    name = models.CharField(max_length=20)
-
-    def __str__(self):
-        return self.name
-
-
-class Camera(models.Model):
-    brand = models.ForeignKey(
-        Brand, related_name='cameras', on_delete=models.PROTECT, null=True
-    )
-    name = models.CharField(max_length=20)
-
-    def __str__(self):
-        return self.brand.name + ' ' + self.name
-
-
-class Film(models.Model):
-    brand = models.ForeignKey(
-        Brand, related_name='film', on_delete=models.PROTECT, null=True
-    )
-    name = models.CharField(max_length=20)
-
-    def __str__(self):
-        return self.brand.name + ' ' + self.name
-
-
-class Lens(models.Model):
-    brand = models.ForeignKey(
-        Brand, related_name='lenses', on_delete=models.PROTECT, null=True
-    )
-    name = models.CharField(max_length=20)
-
-    def __str__(self):
-        return self.brand.name + ' ' + self.name
 
 
 class Post(models.Model):

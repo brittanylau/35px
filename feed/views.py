@@ -1,15 +1,10 @@
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from .models import Tag, Camera, Film, Lens, Post, Comment
+from .models import Tag, Post, Comment
 
 TEMPLATE_DIR = 'feed/'
-USER_TEMPLATE_DIR = TEMPLATE_DIR + 'users/'
 TAG_TEMPLATE_DIR = TEMPLATE_DIR + 'tags/'
-GEAR_TEMPLATE_DIR = TEMPLATE_DIR + 'gear/'
-CAMERA_TEMPLATE_DIR = GEAR_TEMPLATE_DIR + 'cameras/'
-FILM_TEMPLATE_DIR = GEAR_TEMPLATE_DIR + 'film/'
-LENS_TEMPLATE_DIR = GEAR_TEMPLATE_DIR + 'lenses/'
 POST_TEMPLATE_DIR = TEMPLATE_DIR + 'posts/'
 COMMENT_TEMPLATE_DIR = TEMPLATE_DIR + 'comments/'
 
@@ -23,20 +18,6 @@ class TagList(ListView):
 class TagDetail(DetailView):
     model = Tag
     template_name = TAG_TEMPLATE_DIR + 'tag_detail.html'
-
-# GEAR
-
-class CameraDetail(DetailView):
-    model = Camera
-    template_name = CAMERA_TEMPLATE_DIR + 'camera_detail.html'
-
-class FilmDetail(DetailView):
-    model = Film
-    template_name = FILM_TEMPLATE_DIR + 'film_detail.html'
-
-class LensDetail(DetailView):
-    model = Lens
-    template_name = LENS_TEMPLATE_DIR + 'lens_detail.html'
 
 # POSTS
 
