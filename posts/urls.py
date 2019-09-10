@@ -4,7 +4,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from . import views
 
 app_name = 'posts'
-api_url = 'api/'
+api_url = 'api/posts/'
 
 urlpatterns = [
     # Templates
@@ -24,12 +24,34 @@ urlpatterns = [
     path('post/<int:pk>/comment/delete', views.CommentDelete.as_view(), name='comment_delete'),
 
     # API endpoints
-    path(api_url + 'tags/',            views.TagListAPI.as_view()),
-    path(api_url + 'tag/<int:pk>',     views.TagDetailAPI.as_view()),
-    path(api_url + 'posts/',           views.PostListAPI.as_view()),
-    path(api_url + 'post/<int:pk>',    views.PostDetailAPI.as_view()),
-    path(api_url + 'comments/',        views.CommentListAPI.as_view()),
-    path(api_url + 'comment/<int:pk>', views.CommentDetailAPI.as_view()),
+    path(api_url, views.posts_api_root),
+    path(
+        api_url + 'tags/',
+        views.TagListAPI.as_view(),
+        name='tag_list_api'
+    ),
+    path(
+        api_url + 'tag/<int:pk>',
+        views.TagDetailAPI.as_view()
+    ),
+    path(
+        api_url + 'posts/',
+        views.PostListAPI.as_view(),
+        name='post_list_api'
+    ),
+    path(
+        api_url + 'post/<int:pk>',
+        views.PostDetailAPI.as_view(),
+    ),
+    path(
+        api_url + 'comments/',
+        views.CommentListAPI.as_view(),
+        name='comment_list_api'
+    ),
+    path(
+        api_url + 'comment/<int:pk>',
+        views.CommentDetailAPI.as_view()
+    ),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
