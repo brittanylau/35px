@@ -9,9 +9,12 @@ router.register('film', views.FilmViewSet)
 router.register('lens', views.LensViewSet)
 
 urlpatterns = [
+
+    # Templates
     path('camera/<int:pk>', views.CameraDetail.as_view(), name='camera_detail'),
     path('film/<int:pk>', views.FilmDetail.as_view(), name='film_detail'),
     path('lens/<int:pk>', views.LensDetail.as_view(), name='lens_detail'),
 
+    # API endpoints
     path('api/equipment/', include(router.urls)),
 ]
