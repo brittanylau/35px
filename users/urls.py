@@ -1,37 +1,30 @@
-from django.urls import path
-from rest_framework.urlpatterns import format_suffix_patterns
+from django.urls import path, include
 
-from . import views
+from rest_framework.routers import DefaultRouter
+
+from .views import UserList, UserDetail, SignUp  # Templates
+from .views import UserViewSet, ProfileViewSet   # API views
 
 app_name = 'users'
-api_url = 'api/users/'
 
-urlpatterns = format_suffix_patterns([
+router = DefaultRouter()
+router.register('users', UserViewSet)
+router.register('profiles', ProfileViewSet)
+
+api_url = 'api/users/'
+user_list = UserViewSet.as_view({'get': 'list'})
+user_detail = UserViewSet.as_view({'get': 'retrieve'})
+profile_list = ProfileViewSet.as_view({'get': 'list'})
+profile_detail = ProfileViewSet.as_view({'get': 'retrieve'})
+
+urlpatterns = [
     # Templates
-    path('users',         views.UserList.as_view(),   name='user_list'),
-    path('user/<int:pk>', views.UserDetail.as_view(), name='user_detail'),
-    path('signup/',       views.SignUp.as_view(),     name='signup'),
+    path('users',         UserList.as_view(),   name='user_list'),
+    path('user/<int:pk>', UserDetail.as_view(), name='user_detail'),
+    path('signup/',       SignUp.as_view(),     name='signup'),
 
     # API endpoints
-    path(api_url, views.api_root),
-    path(
-        api_url + 'users',
-        views.UserListAPI.as_view(),
-        name='user-list-api'
-    ),
-    path(
-        api_url + 'user/<int:pk>/',
-        views.UserDetailAPI.as_view(),
-        name='user-detail-api'
-    ),
-    path(
-        api_url + 'profiles/',
-        views.UserProfileListAPI.as_view(),
-        name='profile-list-api'
-    ),
-    path(
-        api_url + 'profile/<int:pk>/',
-        views.UserProfileDetailAPI.as_view(),
-        name='profile-detail-api'
-    ),
-])
+    path(api_url, include(router.urls)),
+    path(api_url + 'user/<int:pk>/', user_detail, name='user-detail-api'),
+    path(api_url + 'profile/<int:pk>/', profile_detail, name='profile-detail-api'),
+]
