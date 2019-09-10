@@ -7,12 +7,12 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = User
-        fields = ['username', 'is_staff']
+        fields = ['id', 'username', 'is_staff']
 
 
 class UserProfileSerializer(serializers.HyperlinkedModelSerializer):
-    username = serializers.CharField(source='user.username')
+    username = serializers.ReadOnlyField(source='user.username')
 
     class Meta:
         model = UserProfile
-        fields = ['username']
+        fields = ['id', 'username']

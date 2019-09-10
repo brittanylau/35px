@@ -4,7 +4,7 @@ from rest_framework.urlpatterns import format_suffix_patterns
 from . import views
 
 app_name = 'equipment'
-api_url = 'api/equipment/'
+api_url = 'api/'
 
 urlpatterns = [
     # Templates

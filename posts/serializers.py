@@ -9,7 +9,7 @@ class TagSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Tag
-        fields = ['name']
+        fields = ['id', 'name']
 
 
 class CommentSerializer(serializers.HyperlinkedModelSerializer):
@@ -19,6 +19,7 @@ class CommentSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Comment
         fields = [
+            'id',
             'author',
             # 'post',
             'text',
@@ -37,6 +38,7 @@ class PostSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Post
         fields = [
+            'id',
             'author',
             'title',
             'caption',

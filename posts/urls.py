@@ -1,17 +1,12 @@
-from django.urls import include, path
-from rest_framework import routers
+from django.urls import path
+from rest_framework.urlpatterns import format_suffix_patterns
 
 from . import views
 
 app_name = 'posts'
-
-router = routers.DefaultRouter()
-router.register('tags', views.TagViewSet)
-router.register('posts', views.PostViewSet)
-router.register('comments', views.CommentViewSet)
+api_url = 'api/'
 
 urlpatterns = [
-
     # Templates
     path('', views.PostList.as_view(), name='home'),
 
@@ -29,5 +24,12 @@ urlpatterns = [
     path('post/<int:pk>/comment/delete', views.CommentDelete.as_view(), name='comment_delete'),
 
     # API endpoints
-    path('api/posts/', include(router.urls)),
+    path(api_url + 'tags/',            views.TagListAPI.as_view()),
+    path(api_url + 'tag/<int:pk>',     views.TagDetailAPI.as_view()),
+    path(api_url + 'posts/',           views.PostListAPI.as_view()),
+    path(api_url + 'post/<int:pk>',    views.PostDetailAPI.as_view()),
+    path(api_url + 'comments/',        views.CommentListAPI.as_view()),
+    path(api_url + 'comment/<int:pk>', views.CommentDetailAPI.as_view()),
 ]
+
+urlpatterns = format_suffix_patterns(urlpatterns)
