@@ -1,12 +1,18 @@
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+from rest_framework import viewsets
+
 from .models import Tag, Post, Comment
+from .serializers import TagSerializer, PostSerializer, CommentSerializer
+
+
+# Templates
+
 
 TAG_TEMPLATE_DIR = 'tags/'
 POST_TEMPLATE_DIR = 'posts/'
 COMMENT_TEMPLATE_DIR = 'comments/'
-
 
 class TagList(ListView):
     model = Tag
@@ -73,9 +79,9 @@ class CommentCreate(CreateView):
     fields = ['post', 'text']
     template_name = COMMENT_TEMPLATE_DIR + 'comment_create.html'
 
-    def form_valid(self, form):
-        form.instance.author = self.request.user.profile
-        return super(CommentCreate, self).form_valid(form)
+    # def form_valid(self, form):
+    #     form.instance.author = self.request.user.profile
+    #     return super(CommentCreate, self).form_valid(form)
 
 
 class CommentUpdate(UpdateView):
@@ -93,3 +99,21 @@ class CommentDelete(DeleteView):
             'posts:post_detail',
             kwargs={'pk': self.object.post.id}
         )
+
+
+# API endpoints
+
+
+class TagViewSet(viewsets.ModelViewSet):
+    queryset = Tag.objects.all().order_by('name')
+    serializer_class = TagSerializer
+
+
+class PostViewSet(viewsets.ModelViewSet):
+    queryset = Post.objects.all().order_by('-posted_on')
+    serializer_class = PostSerializer
+
+
+class CommentViewSet(viewsets.ModelViewSet):
+    queryset = Comment.objects.all().order_by('-posted_on')
+    serializer_class = CommentSerializer

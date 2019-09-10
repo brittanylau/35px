@@ -17,7 +17,10 @@ class Post(models.Model):
         ordering = ['-posted_on']
 
     author = models.ForeignKey(
-        UserProfile, on_delete=models.CASCADE, related_name='posts', null=True
+        UserProfile,
+        on_delete=models.CASCADE,
+        related_name='posts',
+        null=True
     )
 
     title = models.CharField(max_length=50)
@@ -118,7 +121,7 @@ class Comment(models.Model):
     posted_on = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.author + ' said \"' + self.text
+        return self.author.user.username + ' said \"' + self.text
 
     def get_absolute_url(self):
         return reverse('posts:post_detail', kwargs={'pk': self.post.id})
