@@ -8,7 +8,7 @@ class CameraSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Camera
-        fields = ['brand', 'name']
+        fields = ['id', 'brand', 'name']
 
 
 class FilmSerializer(serializers.HyperlinkedModelSerializer):
@@ -16,7 +16,7 @@ class FilmSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Film
-        fields = ['brand', 'name']
+        fields = ['id', 'brand', 'name']
 
 
 class LensSerializer(serializers.HyperlinkedModelSerializer):
@@ -24,4 +24,4 @@ class LensSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Lens
-        fields = ['brand', 'name']
+        fields = ['id', 'brand', 'name']

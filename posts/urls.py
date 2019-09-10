@@ -3,6 +3,8 @@ from rest_framework import routers
 
 from . import views
 
+app_name = 'posts'
+
 router = routers.DefaultRouter()
 router.register('tags', views.TagViewSet)
 router.register('posts', views.PostViewSet)
