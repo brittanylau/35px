@@ -1,5 +1,11 @@
 from django.views.generic import DetailView
+from rest_framework import viewsets
+
 from .models import Camera, Film, Lens
+from .serializers import CameraSerializer, FilmSerializer, LensSerializer
+
+
+# Templates
 
 
 class CameraDetail(DetailView):
@@ -15,3 +21,21 @@ class FilmDetail(DetailView):
 class LensDetail(DetailView):
     model = Lens
     template_name = 'lens_detail.html'
+
+
+# API endpoints
+
+
+class CameraViewSet(viewsets.ModelViewSet):
+    queryset = Camera.objects.all()  # .order_by('brand')
+    serializer_class = CameraSerializer
+
+
+class FilmViewSet(viewsets.ModelViewSet):
+    queryset = Film.objects.all()  # .order_by('brand')
+    serializer_class = FilmSerializer
+
+
+class LensViewSet(viewsets.ModelViewSet):
+    queryset = Lens.objects.all()  # .order_by('brand')
+    serializer_class = LensSerializer
