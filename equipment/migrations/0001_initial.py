@@ -24,7 +24,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=20)),
-                ('brand', models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, related_name='cameras', to='gear.Brand')),
+                ('brand', models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, related_name='cameras', to='equipment.Brand')),
             ],
         ),
         migrations.CreateModel(
@@ -32,7 +32,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=20)),
-                ('brand', models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, related_name='film', to='gear.Brand')),
+                ('brand', models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, related_name='film', to='equipment.Brand')),
             ],
         ),
         migrations.CreateModel(
@@ -40,7 +40,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=20)),
-                ('brand', models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, related_name='lenses', to='gear.Brand')),
+                ('brand', models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, related_name='lenses', to='equipment.Brand')),
             ],
         ),
     ]

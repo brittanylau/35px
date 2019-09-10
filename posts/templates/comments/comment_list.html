@@ -17,8 +17,8 @@
               ⋮
             </button>
             <div class="dropdown-menu dropdown-menu-right">
-              <a class="btn dropdown-item" role="button" href="{% url 'feed:comment_edit' comment.id %}">Edit</a>
-              <a class="btn dropdown-item" role="button" href="{% url 'feed:comment_delete' comment.id %}">Delete</a>
+              <a class="btn dropdown-item" role="button" href="{% url 'posts:comment_edit' comment.id %}">Edit</a>
+              <a class="btn dropdown-item" role="button" href="{% url 'posts:comment_delete' comment.id %}">Delete</a>
             </div>
           </div>
         </div>

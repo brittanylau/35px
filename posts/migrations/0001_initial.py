@@ -9,7 +9,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('gear', '0001_initial'),
+        ('equipment', '0001_initial'),
         ('users', '0001_initial'),
     ]
 
@@ -36,9 +36,9 @@ class Migration(migrations.Migration):
                 ('shutter_speed', models.PositiveIntegerField(blank=True, choices=[(1, '1'), (2, '1/2'), (4, '1/4'), (8, '1/8'), (15, '1/15'), (30, '1/30'), (60, '1/60'), (125, '1/125'), (250, '1/250'), (500, '1/500'), (1000, '1/1000'), (2000, '1/2000'), (4000, '1/4000')], null=True)),
                 ('exposure', models.PositiveIntegerField(blank=True, choices=[(100, '100'), (200, '200'), (400, '400'), (800, '800'), (1600, '1600')], null=True)),
                 ('author', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='posts', to='users.UserProfile')),
-                ('camera', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, related_name='posts', to='gear.Camera')),
-                ('film', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, related_name='posts', to='gear.Film')),
-                ('lens', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, related_name='posts', to='gear.Lens')),
+                ('camera', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, related_name='posts', to='equipment.Camera')),
+                ('film', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, related_name='posts', to='equipment.Film')),
+                ('lens', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.PROTECT, related_name='posts', to='equipment.Lens')),
             ],
             options={
                 'ordering': ['-posted_on'],
@@ -54,11 +54,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='post',
             name='tags',
-            field=models.ManyToManyField(related_name='posts', to='feed.Tag'),
+            field=models.ManyToManyField(related_name='posts', to='posts.Tag'),
         ),
         migrations.AddField(
             model_name='comment',
             name='post',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='comments', to='feed.Post'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='comments', to='posts.Post'),
         ),
     ]

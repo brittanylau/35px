@@ -19,9 +19,9 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('', include('feed.urls')),
+    path('', include('posts.urls')),
     path('', include('users.urls')),
-    path('', include('gear.urls')),
+    path('', include('equipment.urls')),
     path('', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
 ]

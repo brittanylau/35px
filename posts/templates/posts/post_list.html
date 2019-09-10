@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="text-center mb-4">
-  <a class="btn btn-primary" href="{% url 'feed:post_create' %}" role="button">
+  <a class="btn btn-primary" href="{% url 'posts:post_create' %}" role="button">
     New post
   </a>
 </div>
@@ -32,14 +32,14 @@
           <a
             class="btn dropdown-item"
             role="button"
-            href="{% url 'feed:post_edit' post.id %}"
+            href="{% url 'posts:post_edit' post.id %}"
           >
             Edit
           </a>
           <a
             class="btn dropdown-item"
             role="button"
-            href="{% url 'feed:post_delete' post.id %}"
+            href="{% url 'posts:post_delete' post.id %}"
           >
             Delete
           </a>
@@ -48,13 +48,13 @@
     </div>
 
     <!-- IMAGE -->
-    <a href="{% url 'feed:post_detail' post.id %}">
+    <a href="{% url 'posts:post_detail' post.id %}">
       <img src="{{ post.image.url }}" alt="{{ post.title }}" class="card-img-top">
     </a>
 
     <!-- FOOTER -->
     <div class="card-footer">
-      <a href="{% url 'feed:post_detail' post.id %}" class="text-muted">
+      <a href="{% url 'posts:post_detail' post.id %}" class="text-muted">
         {{ post.posted_on|timesince }} ago
       </a>
     </div>

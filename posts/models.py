@@ -1,7 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from users.models import UserProfile
-from gear.models import Camera, Film, Lens
+from equipment.models import Camera, Film, Lens
 
 
 class Tag(models.Model):
@@ -28,7 +28,7 @@ class Post(models.Model):
 
     tags = models.ManyToManyField(Tag, related_name='posts')
 
-    # Gear
+    # Equipment
     image = models.ImageField(upload_to='posts')
     camera = models.ForeignKey(
         Camera, related_name='posts',
@@ -98,7 +98,7 @@ class Post(models.Model):
         return self.title + ', taken by ' + self.author.user.username
 
     def get_absolute_url(self):
-        return reverse('feed:post_detail', kwargs={'pk': self.id})
+        return reverse('posts:post_detail', kwargs={'pk': self.id})
 
 
 class Comment(models.Model):
@@ -121,4 +121,4 @@ class Comment(models.Model):
         return self.author + ' said \"' + self.text
 
     def get_absolute_url(self):
-        return reverse('feed:post_detail', kwargs={'pk': self.post.id})
+        return reverse('posts:post_detail', kwargs={'pk': self.post.id})
