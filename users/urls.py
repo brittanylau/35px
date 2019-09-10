@@ -1,17 +1,16 @@
 from django.urls import path, include
-
 from rest_framework.routers import DefaultRouter
 
 from .views import UserList, UserDetail, SignUp  # Templates
 from .views import UserViewSet, ProfileViewSet   # API views
 
 app_name = 'users'
+api_url = 'api/users/'
 
 router = DefaultRouter()
 router.register('users', UserViewSet)
 router.register('profiles', ProfileViewSet)
 
-api_url = 'api/users/'
 user_list = UserViewSet.as_view({'get': 'list'})
 user_detail = UserViewSet.as_view({'get': 'retrieve'})
 profile_list = ProfileViewSet.as_view({'get': 'list'})
