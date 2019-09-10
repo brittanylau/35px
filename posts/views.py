@@ -1,10 +1,12 @@
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
 from .models import Tag, Post, Comment
 from .serializers import TagSerializer, PostSerializer, CommentSerializer
+from .permissions import IsAuthorOrReadOnly
 
 
 # Templates
@@ -117,18 +119,28 @@ class TagDetailAPI(RetrieveUpdateDestroyAPIView):
 class PostListAPI(ListCreateAPIView):
     queryset = Post.objects.all().order_by('-posted_on')
     serializer_class = PostSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user.profile)
 
 
 class PostDetailAPI(RetrieveUpdateDestroyAPIView):
     queryset = Post.objects.all().order_by('-posted_on')
     serializer_class = PostSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly]
 
 
 class CommentListAPI(ListCreateAPIView):
     queryset = Comment.objects.all().order_by('-posted_on')
     serializer_class = CommentSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user.profile)
 
 
 class CommentDetailAPI(RetrieveUpdateDestroyAPIView):
     queryset = Comment.objects.all().order_by('-posted_on')
     serializer_class = CommentSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly]

@@ -1,7 +1,6 @@
 from rest_framework import serializers
 
 from .models import Tag, Post, Comment
-from users.serializers import UserProfileSerializer
 from equipment.serializers import CameraSerializer, FilmSerializer, LensSerializer
 
 
@@ -13,27 +12,28 @@ class TagSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class CommentSerializer(serializers.HyperlinkedModelSerializer):
-    author = UserProfileSerializer()
-    # post = PostSerializer()
+    author = serializers.ReadOnlyField(source='author.user.username')
+    post = serializers.ReadOnlyField(source='post.id')
 
     class Meta:
         model = Comment
         fields = [
             'id',
             'author',
-            # 'post',
+            'post',
             'text',
             'posted_on',
         ]
 
 
 class PostSerializer(serializers.HyperlinkedModelSerializer):
-    author = UserProfileSerializer()
+    author = serializers.ReadOnlyField(source='author.user.username')
     tags = TagSerializer(many=True)
     camera = CameraSerializer()
     film = FilmSerializer()
     lens = LensSerializer()
     comments = CommentSerializer(many=True)
+    # comments = serializers.PrimaryKeyRelatedField(many=True, queryset=Comment.objects.all())
 
     class Meta:
         model = Post
