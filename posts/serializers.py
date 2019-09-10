@@ -5,13 +5,15 @@ from equipment.serializers import CameraSerializer, FilmSerializer, LensSerializ
 
 
 class TagSerializer(serializers.HyperlinkedModelSerializer):
+    url = serializers.HyperlinkedIdentityField(view_name='posts:tag-detail-api')
 
     class Meta:
         model = Tag
-        fields = ['id', 'name']
+        fields = ['id', 'url', 'name']
 
 
 class CommentSerializer(serializers.HyperlinkedModelSerializer):
+    url = serializers.HyperlinkedIdentityField(view_name='posts:comment-detail-api')
     author = serializers.ReadOnlyField(source='author.user.username')
     post = serializers.ReadOnlyField(source='post.id')
 
@@ -19,6 +21,7 @@ class CommentSerializer(serializers.HyperlinkedModelSerializer):
         model = Comment
         fields = [
             'id',
+            'url',
             'author',
             'post',
             'text',
@@ -27,6 +30,7 @@ class CommentSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class PostSerializer(serializers.HyperlinkedModelSerializer):
+    url = serializers.HyperlinkedIdentityField(view_name='posts:post-detail-api')
     author = serializers.ReadOnlyField(source='author.user.username')
     tags = TagSerializer(many=True)
     camera = CameraSerializer()
@@ -39,6 +43,7 @@ class PostSerializer(serializers.HyperlinkedModelSerializer):
         model = Post
         fields = [
             'id',
+            'url',
             'author',
             'title',
             'caption',

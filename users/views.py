@@ -2,7 +2,11 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
+
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.reverse import reverse
 
 from .models import User, UserProfile
 from .serializers import UserSerializer, UserProfileSerializer
@@ -26,6 +30,20 @@ class SignUp(CreateView):
 
 
 # API endpoints
+
+
+@api_view(['GET'])
+def api_root(request, format=None):
+    return Response({
+        'tags': reverse(
+            'users:user-list-api',
+            request=request, format=format
+        ),
+        'posts': reverse(
+            'users:profile-list-api',
+            request=request, format=format
+        )
+    })
 
 
 class UserListAPI(ListCreateAPIView):

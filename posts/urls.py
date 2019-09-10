@@ -6,7 +6,7 @@ from . import views
 app_name = 'posts'
 api_url = 'api/posts/'
 
-urlpatterns = [
+urlpatterns = format_suffix_patterns([
     # Templates
     path('', views.PostList.as_view(), name='home'),
 
@@ -24,34 +24,35 @@ urlpatterns = [
     path('post/<int:pk>/comment/delete', views.CommentDelete.as_view(), name='comment_delete'),
 
     # API endpoints
-    path(api_url, views.posts_api_root),
+    path(api_url, views.api_root),
     path(
         api_url + 'tags/',
         views.TagListAPI.as_view(),
-        name='tag_list_api'
+        name='tag-list-api'
     ),
     path(
         api_url + 'tag/<int:pk>',
-        views.TagDetailAPI.as_view()
+        views.TagDetailAPI.as_view(),
+        name='tag-detail-api'
     ),
     path(
         api_url + 'posts/',
         views.PostListAPI.as_view(),
-        name='post_list_api'
+        name='post-list-api'
     ),
     path(
         api_url + 'post/<int:pk>',
         views.PostDetailAPI.as_view(),
+        name='post-detail-api'
     ),
     path(
         api_url + 'comments/',
         views.CommentListAPI.as_view(),
-        name='comment_list_api'
+        name='comment-list-api'
     ),
     path(
         api_url + 'comment/<int:pk>',
-        views.CommentDetailAPI.as_view()
+        views.CommentDetailAPI.as_view(),
+        name='comment-detail-api'
     ),
-]
-
-urlpatterns = format_suffix_patterns(urlpatterns)
+])

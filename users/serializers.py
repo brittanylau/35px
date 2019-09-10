@@ -2,21 +2,28 @@ from rest_framework import serializers
 
 from .models import User, UserProfile
 from posts.models import Post, Comment
-# from posts.serializers import PostSerializer
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
+    url = serializers.HyperlinkedIdentityField(view_name='users:user-detail-api')
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'is_staff']
+        fields = ['id', 'url', 'username', 'is_staff']
 
 
 class UserProfileSerializer(serializers.HyperlinkedModelSerializer):
-    username = serializers.ReadOnlyField(source='user.username')
-    posts = serializers.PrimaryKeyRelatedField(many=True, queryset=Post.objects.all())
-    comments = serializers.PrimaryKeyRelatedField(many=True, queryset=Comment.objects.all())
+    url = serializers.HyperlinkedIdentityField(view_name='users:profile-detail-api')
+    user = UserSerializer()
+    posts = serializers.PrimaryKeyRelatedField(
+        many=True,
+        queryset=Post.objects.all()
+    )
+    comments = serializers.PrimaryKeyRelatedField(
+        many=True,
+        queryset=Comment.objects.all()
+    )
 
     class Meta:
         model = UserProfile
-        fields = ['id', 'username', 'posts', 'comments']
+        fields = ['id', 'url', 'user', 'posts', 'comments']

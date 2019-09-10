@@ -3,11 +3,10 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, GenericAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
-from rest_framework import renderers
 
 from .models import Tag, Post, Comment
 from .serializers import TagSerializer, PostSerializer, CommentSerializer
@@ -112,11 +111,20 @@ class CommentDelete(DeleteView):
 
 
 @api_view(['GET'])
-def posts_api_root(request, format=None):
+def api_root(request, format=None):
     return Response({
-        'tags': reverse('posts:tag_list_api', request=request, format=format),
-        'posts': reverse('posts:post_list_api', request=request, format=format),
-        'comments': reverse('posts:comment_list_api', request=request, format=format),
+        'tags': reverse(
+            'posts:tag-list-api',
+            request=request, format=format
+        ),
+        'posts': reverse(
+            'posts:post-list-api',
+            request=request, format=format
+        ),
+        'comments': reverse(
+            'posts:comment-list-api',
+            request=request, format=format
+        ),
     })
 
 

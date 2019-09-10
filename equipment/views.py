@@ -1,5 +1,9 @@
 from django.views.generic import DetailView
+
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.reverse import reverse
 
 from .models import Camera, Film, Lens
 from .serializers import CameraSerializer, FilmSerializer, LensSerializer
@@ -21,6 +25,24 @@ class LensDetail(DetailView):
 
 
 # API endpoints
+
+
+@api_view(['GET'])
+def api_root(request, format=None):
+    return Response({
+        'cameras': reverse(
+            'equipment:camera-list-api',
+            request=request, format=format
+        ),
+        'film': reverse(
+            'equipment:film-list-api',
+            request=request, format=format
+        ),
+        'lenses': reverse(
+            'equipment:lens-list-api',
+            request=request, format=format
+        )
+    })
 
 
 class CameraListAPI(ListCreateAPIView):
