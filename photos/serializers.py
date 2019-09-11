@@ -82,7 +82,7 @@ class PhotoSerializer(serializers.HyperlinkedModelSerializer):
             'author',
             'title',
             'caption',
-            'taken_on',
+            # 'taken_on',
             'posted_on',
             'tags',
             'camera',
@@ -93,3 +93,6 @@ class PhotoSerializer(serializers.HyperlinkedModelSerializer):
             'exposure',
             'comments',
         ]
+
+    def create(self, validated_data):
+        print('hi')

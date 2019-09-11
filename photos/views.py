@@ -42,9 +42,17 @@ class PhotoDetail(DetailView):
 class PhotoCreate(CreateView):
     model = Photo
     fields = [
-        'author', 'image', 'title', 'caption', 'taken_on',
-        'camera', 'film', 'lens',
-        'exposure', 'aperture', 'shutter_speed',
+        'author',
+        'image',
+        'title',
+        'caption',
+        # 'taken_on',
+        'camera',
+        'film',
+        'lens',
+        'exposure',
+        'aperture',
+        'shutter_speed',
         'tags'
     ]
     template_name = PHOTO_TEMPLATE_DIR + 'photo_create.html'
@@ -57,9 +65,15 @@ class PhotoCreate(CreateView):
 class PhotoUpdate(UpdateView):
     model = Photo
     fields = [
-        'title', 'caption', 'taken_on',
-        'camera', 'film', 'lens',
-        'exposure', 'aperture', 'shutter_speed',
+        'title',
+        'caption',
+        # 'taken_on',
+        'camera',
+        'film',
+        'lens',
+        'exposure',
+        'aperture',
+        'shutter_speed',
         'tags'
     ]
     template_name = PHOTO_TEMPLATE_DIR + 'photo_edit.html'

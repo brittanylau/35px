@@ -33,7 +33,7 @@ tag_detail = TagViewSet.as_view({
 })
 photo_detail = PhotoViewSet.as_view({
     'get': 'retrieve',
-    'patch': 'update',
+    # 'patch': 'update',
     'delete': 'destroy',
 })
 comment_detail = CommentViewSet.as_view({

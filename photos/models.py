@@ -26,7 +26,7 @@ class Photo(models.Model):
     title = models.CharField(max_length=50)
     caption = models.CharField(max_length=200)
 
-    taken_on = models.DateField('date taken')
+    # taken_on = models.DateField('date taken')
     posted_on = models.DateTimeField(auto_now=True)
 
     tags = models.ManyToManyField(
