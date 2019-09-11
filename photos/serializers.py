@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from .models import Tag, Photo, Comment
+from equipment.models import Brand, Camera, Film, Lens
 from equipment.serializers import (
     CameraSerializer,
     FilmSerializer,
@@ -72,7 +73,7 @@ class PhotoSerializer(serializers.HyperlinkedModelSerializer):
     film = FilmSerializer()
     lens = LensSerializer()
 
-    comments = CommentSerializer(many=True)
+    # comments = CommentSerializer(many=True)
 
     class Meta:
         model = Photo
@@ -84,15 +85,49 @@ class PhotoSerializer(serializers.HyperlinkedModelSerializer):
             'caption',
             # 'taken_on',
             'posted_on',
-            'tags',
-            'camera',
-            'film',
-            'lens',
+            'tags',    # must be existing
+            'camera',  # must be existing
+            'film',    # must be existing
+            'lens',    # must be existing
             'aperture',
             'shutter_speed',
             'exposure',
-            'comments',
+            # 'comments',
         ]
 
     def create(self, validated_data):
-        print('hi')
+        tag_data = validated_data.pop('tags')
+        camera_data = validated_data.pop('camera')
+        film_data = validated_data.pop('film')
+        lens_data = validated_data.pop('lens')
+
+        camera = Camera.objects.get(
+            brand=Brand.objects.get(name=camera_data['brand']['name']),
+            name=camera_data['name'],
+        )
+        film = Film.objects.get(
+            brand=Brand.objects.get(name=film_data['brand']['name']),
+            name=film_data['name'],
+        )
+        lens = Lens.objects.get(
+            brand=Brand.objects.get(name=lens_data['brand']['name']),
+            name=lens_data['name'],
+        )
+
+        # tags = []
+        # for tag in tags_data:
+        #     tags += Tag.objects.get(name=tags_data['name'])
+
+        photo = Photo.objects.create(
+            **validated_data,
+            camera=camera,
+            film=film,
+            lens=lens
+        )
+
+        for data in tag_data:
+            tag_name = data['name']
+            tag = Tag.objects.get(name=tag_name)
+            photo.tags.add(tag)
+
+        return photo
