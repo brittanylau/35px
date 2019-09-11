@@ -2,8 +2,13 @@ from django.views.generic import DetailView
 
 from rest_framework.viewsets import ModelViewSet
 
-from .models import Camera, Film, Lens
-from .serializers import CameraSerializer, FilmSerializer, LensSerializer
+from .models import Brand, Camera, Film, Lens
+from .serializers import (
+    BrandSerializer,
+    CameraSerializer,
+    FilmSerializer,
+    LensSerializer,
+)
 
 
 # Templates
@@ -22,6 +27,11 @@ class LensDetail(DetailView):
 
 
 # API endpoints
+
+
+class BrandViewSet(ModelViewSet):
+    queryset = Brand.objects.all()
+    serializer_class = BrandSerializer
 
 
 class CameraViewSet(ModelViewSet):

@@ -10,7 +10,7 @@ class Brand(models.Model):
 
 class Camera(models.Model):
     brand = models.ForeignKey(
-        Brand, related_name='cameras', on_delete=models.PROTECT, null=True
+        Brand, related_name='cameras', on_delete=models.PROTECT
     )
     name = models.CharField(max_length=20)
 
