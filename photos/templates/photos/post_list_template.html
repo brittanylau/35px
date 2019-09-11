@@ -1,9 +1,9 @@
-{% for post in object.photos.all %}
+{% for photo in object.photos.all %}
 <div class="card mb-4">
   <div class="card-header bg-white d-flex justify-content-between align-items-center">
 
-    <a class='text-dark align-middle' href="{% url 'users:user_detail' post.author.id %}">
-      {{ post.author }}
+    <a class='text-dark align-middle' href="{% url 'users:user_detail' photo.author.id %}">
+      {{ photo.author }}
     </a>
 
     <!-- MENU -->
@@ -13,32 +13,20 @@
           ⋮
         </button>
         <div class="dropdown-menu dropdown-menu-right">
-          <a class="btn dropdown-item" role="button" href="{% url 'photos:post_edit' post.id %}">Edit</a>
-          <a class="btn dropdown-item" role="button" href="{% url 'photos:post_delete' post.id %}">Delete</a>
+          <a class="btn dropdown-item" role="button" href="{% url 'photos:post_edit' photo.id %}">Edit</a>
+          <a class="btn dropdown-item" role="button" href="{% url 'photos:post_delete' photo.id %}">Delete</a>
         </div>
       </div>
     </div>
 
   </div>
 
-  <a href="{% url 'photos:post_detail' post.id %}">
-    <img src="{{ post.image.url }}" alt="{{ post.title }}" class="card-img-top">
+  <a href="{% url 'photos:post_detail' photo.id %}">
+    <img src="{{ photo.image.url }}" alt="{{ photo.title }}" class="card-img-top">
   </a>
 
-  <!--
-  <div class="card-body">
-    <h2 class=card-title>{{ post.title }}</h2>
-    <p class=card-text>{{ post.caption }}</p>
-    {% for tag in post.tags.all %}
-      <span class="badge badge-dark mb-3">
-        <a class='text-white' href="{% url 'photos:tag_detail' tag.id %}">{{ tag.name }}</a>
-      </span>
-    {% endfor %}
-  </div>
-  -->
-
   <div class="card-footer">
-    <a href="{% url 'photos:post_detail' post.id %}" class="text-muted">{{ post.posted_on|timesince }} ago</a>
+    <a href="{% url 'photos:post_detail' photo.id %}" class="text-muted">{{ photo.posted_on|timesince }} ago</a>
   </div>
 
 </div>

@@ -3,43 +3,43 @@
 {% block content %}
 <div class="card mb-5">
 
-  <img src="{{ post.image.url }}" alt="{{ post.title }}" class="card-img-top">
+  <img src="{{ photo.image.url }}" alt="{{ photo.title }}" class="card-img-top">
 
   <div class="card-body">
     <h2 class="card-title">
-      {{ post.title }}
+      {{ photo.title }}
     </h2>
     <p>
-      by <a href="{% url 'users:user_detail' post.author.id %}">{{ post.author}}</a>
+      by <a href="{% url 'users:user_detail' photo.author.id %}">{{ photo.author}}</a>
     </p>
     <hr>
-    <p class="card-text">{{ post.caption }}</p>
+    <p class="card-text">{{ photo.caption }}</p>
 
     <!-- CAPTURE DATA -->
     <div class="mb-4">
       <span class="oi oi-camera-slr pr-2"></span>
-      <a class="text-dark" href="{% url 'equipment:camera_detail' post.camera.id %}">
-        {{ post.camera }}
+      <a class="text-dark" href="{% url 'equipment:camera_detail' photo.camera.id %}">
+        {{ photo.camera }}
       </a><br>
 
       <span class="oi oi-box pr-2"></span>
-      <a class="text-dark" href="{% url 'equipment:film_detail' post.film.id %}">
-        {{ post.film }}
+      <a class="text-dark" href="{% url 'equipment:film_detail' photo.film.id %}">
+        {{ photo.film }}
       </a><br>
 
       <span class="oi oi-target pr-2"></span>
-      <a class="text-dark" href="{% url 'equipment:lens_detail' post.lens.id %}">
-        {{ post.lens }}
+      <a class="text-dark" href="{% url 'equipment:lens_detail' photo.lens.id %}">
+        {{ photo.lens }}
       </a><br>
 
       <span class="oi oi-aperture pr-2"></span>
-      <span class="pr-3">{{ post.shutter_speed }}mm</span>
-      <span class="pr-3">f/{{ post.aperture }}</span>
-      <span class="pr-3">ISO {{ post.exposure }}</span>
+      <span class="pr-3">{{ photo.shutter_speed }}mm</span>
+      <span class="pr-3">f/{{ photo.aperture }}</span>
+      <span class="pr-3">ISO {{ photo.exposure }}</span>
     </div>
 
     <!-- TAGS -->
-    {% for tag in post.tags.all %}
+    {% for tag in photo.tags.all %}
       <span class="badge badge-primary mb-0 mr-1">
         <a class='text-white' href="{% url 'photos:tag_detail' tag.id %}">
           {{ tag.name }}
@@ -49,14 +49,14 @@
   </div>
 
   <div class="card-footer">
-    <a href="{% url 'photos:post_detail' post.id %}" class="text-muted">
-      {{ post.posted_on|timesince }} ago
+    <a href="{% url 'photos:post_detail' photo.id %}" class="text-muted">
+      {{ photo.posted_on|timesince }} ago
     </a>
     <div class="float-right">
-      <a class="text-muted" href="{% url 'photos:post_edit' post.id %}">
+      <a class="text-muted" href="{% url 'photos:post_edit' photo.id %}">
         Edit
       </a>
-      <a class="text-muted" href="{% url 'photos:post_delete' post.id %}">
+      <a class="text-muted" href="{% url 'photos:post_delete' photo.id %}">
         Delete
       </a>
     </div>
@@ -66,12 +66,12 @@
 <!-- COMMENTS -->
 <div>
   <h5 class="mb-3">
-    {{ post.comments.count }} comment(s)
+    {{ photo.comments.count }} comment(s)
   </h5>
-  <a class="btn btn-outline-primary mb-4" href="{% url 'photos:comment_create' post.id %}" role="button">
+  <a class="btn btn-outline-primary mb-4" href="{% url 'photos:comment_create' photo.id %}" role="button">
     New comment
   </a>
-  {% include "../comments/comment_list.html" with objects=post %}
+  {% include "../comments/comment_list.html" with objects=photo %}
 </div>
 
 {% endblock %}

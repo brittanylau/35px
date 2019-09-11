@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Tag, Post, Comment
+from .models import Tag, Photo, Comment
 from equipment.serializers import (
     CameraSerializer,
     FilmSerializer,
@@ -27,7 +27,7 @@ class CommentSerializer(serializers.HyperlinkedModelSerializer):
         view_name='photos:comment-detail-api'
     )
     author = serializers.ReadOnlyField(source='author.user.username')
-    post = serializers.ReadOnlyField(source='post.id')
+    photo = serializers.ReadOnlyField(source='photo.id')
 
     class Meta:
         model = Comment
@@ -35,13 +35,13 @@ class CommentSerializer(serializers.HyperlinkedModelSerializer):
             'id',
             'url',
             'author',
-            'post',
+            'photo',
             'text',
             'posted_on',
         ]
 
 
-class PostSerializer(serializers.HyperlinkedModelSerializer):
+class PhotoSerializer(serializers.HyperlinkedModelSerializer):
     url = serializers.HyperlinkedIdentityField(
         view_name='photos:post-detail-api'
     )
@@ -57,7 +57,7 @@ class PostSerializer(serializers.HyperlinkedModelSerializer):
     # )
 
     class Meta:
-        model = Post
+        model = Photo
         fields = [
             'id',
             'url',

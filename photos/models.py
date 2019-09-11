@@ -11,7 +11,7 @@ class Tag(models.Model):
         return self.name
 
 
-class Post(models.Model):
+class Photo(models.Model):
 
     class Meta:
         ordering = ['-posted_on']
@@ -30,7 +30,7 @@ class Post(models.Model):
     posted_on = models.DateTimeField(auto_now=True)
 
     tags = models.ManyToManyField(
-        Tag, related_name='photos', null=True, blank=True
+        Tag, related_name='photos', blank=True
     )
 
     # Equipment
@@ -113,8 +113,8 @@ class Comment(models.Model):
         related_name='comments',
         null=True
     )
-    post = models.ForeignKey(
-        Post,
+    photo = models.ForeignKey(
+        Photo,
         on_delete=models.CASCADE,
         related_name='comments'
     )
@@ -126,4 +126,4 @@ class Comment(models.Model):
         return self.author.user.username + ' said \"' + self.text
 
     def get_absolute_url(self):
-        return reverse('photos:post_detail', kwargs={'pk': self.post.id})
+        return reverse('photos:post_detail', kwargs={'pk': self.photo.id})

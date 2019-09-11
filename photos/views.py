@@ -5,15 +5,15 @@ from django.urls import reverse_lazy
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
-from .models import Tag, Post, Comment
-from .serializers import TagSerializer, PostSerializer, CommentSerializer
+from .models import Tag, Photo, Comment
+from .serializers import TagSerializer, PhotoSerializer, CommentSerializer
 from .permissions import IsAuthorOrReadOnly
 
 
 # Templates
 
 TAG_TEMPLATE_DIR = 'tags/'
-POST_TEMPLATE_DIR = 'photos/'
+PHOTO_TEMPLATE_DIR = 'photos/'
 COMMENT_TEMPLATE_DIR = 'comments/'
 
 
@@ -28,47 +28,47 @@ class TagDetail(DetailView):
     template_name = TAG_TEMPLATE_DIR + 'tag_detail.html'
 
 
-class PostList(ListView):
-    model = Post
+class PhotoList(ListView):
+    model = Photo
     ordering = ['-posted_on']
-    template_name = POST_TEMPLATE_DIR + 'post_list.html'
+    template_name = PHOTO_TEMPLATE_DIR + 'post_list.html'
 
 
-class PostDetail(DetailView):
-    model = Post
-    template_name = POST_TEMPLATE_DIR + 'post_detail.html'
+class PhotoDetail(DetailView):
+    model = Photo
+    template_name = PHOTO_TEMPLATE_DIR + 'post_detail.html'
 
 
-class PostCreate(CreateView):
-    model = Post
+class PhotoCreate(CreateView):
+    model = Photo
     fields = [
         'author', 'image', 'title', 'caption', 'taken_on',
         'camera', 'film', 'lens',
         'exposure', 'aperture', 'shutter_speed',
         'tags'
     ]
-    template_name = POST_TEMPLATE_DIR + 'post_create.html'
+    template_name = PHOTO_TEMPLATE_DIR + 'post_create.html'
 
     def form_valid(self, form):
         form.instance.author = self.request.user.profile
-        return super(PostCreate, self).form_valid(form)
+        return super(PhotoCreate, self).form_valid(form)
 
 
-class PostUpdate(UpdateView):
-    model = Post
+class PhotoUpdate(UpdateView):
+    model = Photo
     fields = [
         'title', 'caption', 'taken_on',
         'camera', 'film', 'lens',
         'exposure', 'aperture', 'shutter_speed',
         'tags'
     ]
-    template_name = POST_TEMPLATE_DIR + 'post_edit.html'
+    template_name = PHOTO_TEMPLATE_DIR + 'post_edit.html'
 
 
-class PostDelete(DeleteView):
-    model = Post
+class PhotoDelete(DeleteView):
+    model = Photo
     success_url = reverse_lazy('photos:home')
-    template_name = POST_TEMPLATE_DIR + 'post_confirm_delete.html'
+    template_name = PHOTO_TEMPLATE_DIR + 'post_confirm_delete.html'
 
 
 class CommentList(ListView):
@@ -79,7 +79,7 @@ class CommentList(ListView):
 
 class CommentCreate(CreateView):
     model = Comment
-    fields = ['post', 'text']
+    fields = ['photo', 'text']
     template_name = COMMENT_TEMPLATE_DIR + 'comment_create.html'
 
     def form_valid(self, form):
@@ -100,7 +100,7 @@ class CommentDelete(DeleteView):
     def get_success_url(self):
         return reverse_lazy(
             'photos:post_detail',
-            kwargs={'pk': self.object.post.id}
+            kwargs={'pk': self.object.photo.id}
         )
 
 
@@ -112,9 +112,9 @@ class TagViewSet(ModelViewSet):
     serializer_class = TagSerializer
 
 
-class PostViewSet(ModelViewSet):
-    queryset = Post.objects.all().order_by('-posted_on')
-    serializer_class = PostSerializer
+class PhotoViewSet(ModelViewSet):
+    queryset = Photo.objects.all().order_by('-posted_on')
+    serializer_class = PhotoSerializer
 
     def get_permissions(self):
         permission_classes = [IsAuthenticatedOrReadOnly]

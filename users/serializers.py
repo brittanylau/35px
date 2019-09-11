@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from .models import User, UserProfile
-from photos.models import Post, Comment
+from photos.models import Photo, Comment
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -26,7 +26,7 @@ class UserProfileSerializer(serializers.HyperlinkedModelSerializer):
     user = UserSerializer()
     photos = serializers.PrimaryKeyRelatedField(
         many=True,
-        queryset=Post.objects.all()
+        queryset=Photo.objects.all()
     )
     comments = serializers.PrimaryKeyRelatedField(
         many=True,

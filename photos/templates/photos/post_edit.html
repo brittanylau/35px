@@ -2,10 +2,10 @@
 
 {% block content %}
 <h1 class="mb-4">
-  Edit post
+  Edit photo
 </h1>
 
-<img class="post-form-photo mb-4" src="{{ post.image.url }}" alt="{{ post.title }}">
+<img class="post-form-photo mb-4" src="{{ photo.image.url }}" alt="{{ photo.title }}">
 
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
