@@ -22,7 +22,10 @@ router.register('comments', CommentViewSet)
 
 tag_list = TagViewSet.as_view({'get': 'list'})
 photo_list = PhotoViewSet.as_view({'get': 'list'})
-comment_list = CommentViewSet.as_view({'get': 'list'})
+comment_list = CommentViewSet.as_view({
+    'get': 'list',
+    'post': 'create',
+})
 
 tag_detail = TagViewSet.as_view({
     'get': 'retrieve',
@@ -31,12 +34,12 @@ tag_detail = TagViewSet.as_view({
 photo_detail = PhotoViewSet.as_view({
     'get': 'retrieve',
     'patch': 'update',
-    'delete': 'destroy'
+    'delete': 'destroy',
 })
 comment_detail = CommentViewSet.as_view({
     'get': 'retrieve',
-    'patch': 'update',
-    'delete': 'destroy'
+    # 'patch': 'update',
+    'delete': 'destroy',
 })
 
 urlpatterns = [

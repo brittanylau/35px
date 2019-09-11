@@ -22,12 +22,25 @@ class TagSerializer(serializers.HyperlinkedModelSerializer):
         ]
 
 
+class PhotoNameSerializer(serializers.HyperlinkedModelSerializer):
+    url = serializers.HyperlinkedIdentityField(
+        view_name='photos:photo-detail-api'
+    )
+
+    class Meta:
+        model = Photo
+        fields = [
+            'url',
+            'title',
+        ]
+
+
 class CommentSerializer(serializers.HyperlinkedModelSerializer):
     url = serializers.HyperlinkedIdentityField(
         view_name='photos:comment-detail-api'
     )
     author = serializers.ReadOnlyField(source='author.user.username')
-    photo = serializers.ReadOnlyField(source='photo.id')
+    photo = PhotoNameSerializer()
 
     class Meta:
         model = Comment
@@ -39,6 +52,14 @@ class CommentSerializer(serializers.HyperlinkedModelSerializer):
             'text',
             'posted_on',
         ]
+
+    def create(self, validated_data):
+        photo_data = validated_data.pop('photo')
+        photo = Photo.objects.get(title=photo_data['title'])  # ideally use ID but not sure how
+        comment = Comment.objects.create(**validated_data, photo=photo)
+        return comment
+
+    # TODO: update method
 
 
 class PhotoSerializer(serializers.HyperlinkedModelSerializer):
@@ -52,9 +73,6 @@ class PhotoSerializer(serializers.HyperlinkedModelSerializer):
     lens = LensSerializer()
 
     comments = CommentSerializer(many=True)
-    # comments = serializers.PrimaryKeyRelatedField(
-    #    many=True, queryset=Comment.objects.all()
-    # )
 
     class Meta:
         model = Photo
