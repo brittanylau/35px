@@ -12,7 +12,7 @@ from .views import (
     TagViewSet, PostViewSet, CommentViewSet
 )
 
-app_name = 'posts'
+app_name = 'photos'
 api_url = 'api/posts/'
 
 router = DefaultRouter()

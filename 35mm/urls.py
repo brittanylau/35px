@@ -19,7 +19,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('', include('posts.urls')),
+    path('', include('photos.urls')),
     path('', include('users.urls')),
     path('', include('equipment.urls')),
 

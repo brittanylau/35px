@@ -32,7 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'rest_framework',
-    'posts.apps.PostsConfig',
+    'photos.apps.PhotosConfig',
     'users.apps.UsersConfig',
     'equipment.apps.EquipmentConfig',
     'django.contrib.admin',         # admin site

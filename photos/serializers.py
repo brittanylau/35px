@@ -10,7 +10,7 @@ from equipment.serializers import (
 
 class TagSerializer(serializers.HyperlinkedModelSerializer):
     url = serializers.HyperlinkedIdentityField(
-        view_name='posts:tag-detail-api'
+        view_name='photos:tag-detail-api'
     )
 
     class Meta:
@@ -24,7 +24,7 @@ class TagSerializer(serializers.HyperlinkedModelSerializer):
 
 class CommentSerializer(serializers.HyperlinkedModelSerializer):
     url = serializers.HyperlinkedIdentityField(
-        view_name='posts:comment-detail-api'
+        view_name='photos:comment-detail-api'
     )
     author = serializers.ReadOnlyField(source='author.user.username')
     post = serializers.ReadOnlyField(source='post.id')
@@ -43,7 +43,7 @@ class CommentSerializer(serializers.HyperlinkedModelSerializer):
 
 class PostSerializer(serializers.HyperlinkedModelSerializer):
     url = serializers.HyperlinkedIdentityField(
-        view_name='posts:post-detail-api'
+        view_name='photos:post-detail-api'
     )
     author = serializers.ReadOnlyField(source='author.user.username')
     tags = TagSerializer(many=True)

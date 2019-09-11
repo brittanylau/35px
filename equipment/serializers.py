@@ -4,7 +4,7 @@ from .models import Camera, Film, Lens
 
 
 class CameraSerializer(serializers.HyperlinkedModelSerializer):
-    brand = serializers.ReadOnlyField(source='brand.name')
+    brand = serializers.StringRelatedField()
     url = serializers.HyperlinkedIdentityField(
         view_name='equipment:camera-detail-api'
     )
@@ -15,7 +15,7 @@ class CameraSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class FilmSerializer(serializers.HyperlinkedModelSerializer):
-    brand = serializers.ReadOnlyField(source='brand.name')
+    brand = serializers.StringRelatedField()
     url = serializers.HyperlinkedIdentityField(
         view_name='equipment:film-detail-api'
     )
@@ -26,7 +26,7 @@ class FilmSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class LensSerializer(serializers.HyperlinkedModelSerializer):
-    brand = serializers.ReadOnlyField(source='brand.name')
+    brand = serializers.StringRelatedField()
     url = serializers.HyperlinkedIdentityField(
         view_name='equipment:lens-detail-api'
     )

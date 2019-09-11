@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from .models import User, UserProfile
-from posts.models import Post, Comment
+from photos.models import Post, Comment
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):

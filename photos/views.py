@@ -67,7 +67,7 @@ class PostUpdate(UpdateView):
 
 class PostDelete(DeleteView):
     model = Post
-    success_url = reverse_lazy('posts:home')
+    success_url = reverse_lazy('photos:home')
     template_name = POST_TEMPLATE_DIR + 'post_confirm_delete.html'
 
 
@@ -99,7 +99,7 @@ class CommentDelete(DeleteView):
 
     def get_success_url(self):
         return reverse_lazy(
-            'posts:post_detail',
+            'photos:post_detail',
             kwargs={'pk': self.object.post.id}
         )
 
@@ -129,13 +129,12 @@ class PostViewSet(ModelViewSet):
 class CommentViewSet(ModelViewSet):
     queryset = Comment.objects.all().order_by('-posted_on')
     serializer_class = CommentSerializer
-    """
+
     def get_permissions(self):
         permission_classes = [IsAuthenticatedOrReadOnly]
         if self.action != 'list':
             permission_classes += [IsAuthorOrReadOnly]
         return [permission() for permission in permission_classes]
-    """
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user.profile)

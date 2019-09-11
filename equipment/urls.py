@@ -12,7 +12,10 @@ router.register('cameras', CameraViewSet)
 router.register('film', FilmViewSet)
 router.register('lenses', LensViewSet)
 
-camera_list = CameraViewSet.as_view({'get': 'list'})
+camera_list = CameraViewSet.as_view({
+    'get': 'list',
+    'post': 'create'
+})
 camera_detail = CameraViewSet.as_view({'get': 'retrieve'})
 film_list = FilmViewSet.as_view({'get': 'list'})
 film_detail = FilmViewSet.as_view({'get': 'retrieve'})
