@@ -9,7 +9,7 @@ from .views import (
     CommentCreate, CommentUpdate, CommentDelete,
 
     # API endpoints
-    TagViewSet, PhotoViewSet, CommentViewSet
+    TagViewSet, PhotoViewSet, CommentViewSet, ImageUploadView
 )
 
 app_name = 'photos'
@@ -20,25 +20,28 @@ router.register('tags', TagViewSet)
 router.register('photos', PhotoViewSet)
 router.register('comments', CommentViewSet)
 
-tag_list = TagViewSet.as_view({'get': 'list'})
-photo_list = PhotoViewSet.as_view({'get': 'list'})
+tag_list = TagViewSet.as_view({
+    'get': 'list',
+    'post': 'create',
+})
+photo_list = PhotoViewSet.as_view({
+    'get': 'list',
+    'post': 'create',
+})
 comment_list = CommentViewSet.as_view({
     'get': 'list',
     'post': 'create',
 })
-
 tag_detail = TagViewSet.as_view({
     'get': 'retrieve',
     'patch': 'update'
 })
 photo_detail = PhotoViewSet.as_view({
     'get': 'retrieve',
-    # 'patch': 'update',
     'delete': 'destroy',
 })
 comment_detail = CommentViewSet.as_view({
     'get': 'retrieve',
-    # 'patch': 'update',
     'delete': 'destroy',
 })
 
@@ -63,4 +66,5 @@ urlpatterns = [
     path(api_url + 'tag/<int:pk>', tag_detail, name='tag-detail-api'),
     path(api_url + 'photo/<int:pk>', photo_detail, name='photo-detail-api'),
     path(api_url + 'comment/<int:pk>', comment_detail, name='comment-detail-api'),
+    path(api_url + 'upload', ImageUploadView.as_view())
 ]

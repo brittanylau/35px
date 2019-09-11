@@ -11,6 +11,13 @@ class Tag(models.Model):
         return self.name
 
 
+class Image(models.Model):
+    file = models.ImageField(blank=False, null=False)
+
+    def __str__(self):
+        return self.file.name
+
+
 class Photo(models.Model):
 
     class Meta:
@@ -23,10 +30,10 @@ class Photo(models.Model):
         null=True
     )
 
+    image = models.ImageField(upload_to='photos', blank=False, null=False)
+
     title = models.CharField(max_length=50)
     caption = models.CharField(max_length=200)
-
-    # taken_on = models.DateField('date taken')
     posted_on = models.DateTimeField(auto_now=True)
 
     tags = models.ManyToManyField(
@@ -34,7 +41,7 @@ class Photo(models.Model):
     )
 
     # Equipment
-    image = models.ImageField(upload_to='photos')
+
     camera = models.ForeignKey(
         Camera, related_name='photos',
         on_delete=models.PROTECT,
@@ -52,6 +59,7 @@ class Photo(models.Model):
     )
 
     # Capture data
+
     APERTURES = (
         (1.4, '1.4'),
         (2,   '2'),

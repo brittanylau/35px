@@ -4,9 +4,13 @@ from django.urls import reverse_lazy
 
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from rest_framework.parsers import FileUploadParser
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework import status
 
 from .models import Tag, Photo, Comment
-from .serializers import TagSerializer, PhotoSerializer, CommentSerializer
+from .serializers import TagSerializer, PhotoSerializer, CommentSerializer, ImageSerializer
 from .permissions import IsAuthorOrReadOnly
 
 
@@ -152,3 +156,16 @@ class CommentViewSet(ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user.profile)
+
+
+class ImageUploadView(APIView):
+    parser_class = (FileUploadParser,)
+
+    def post(self, request, *args, **kwargs):
+        image_serializer = ImageSerializer(data=request.data)
+
+        if image_serializer.is_valid():
+            image_serializer.save()
+            return Response(image_serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(image_serializer.errors, status=status.HTTP_400_BAD_REQUEST)

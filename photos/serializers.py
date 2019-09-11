@@ -1,12 +1,18 @@
 from rest_framework import serializers
 
-from .models import Tag, Photo, Comment
+from .models import Tag, Photo, Comment, Image
 from equipment.models import Brand, Camera, Film, Lens
 from equipment.serializers import (
     CameraSerializer,
     FilmSerializer,
     LensSerializer
 )
+
+
+class ImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Image
+        fields = "__all__"
 
 
 class TagSerializer(serializers.HyperlinkedModelSerializer):
@@ -83,7 +89,6 @@ class PhotoSerializer(serializers.HyperlinkedModelSerializer):
             'author',
             'title',
             'caption',
-            # 'taken_on',
             'posted_on',
             'tags',    # must be existing
             'camera',  # must be existing
@@ -113,10 +118,6 @@ class PhotoSerializer(serializers.HyperlinkedModelSerializer):
             brand=Brand.objects.get(name=lens_data['brand']['name']),
             name=lens_data['name'],
         )
-
-        # tags = []
-        # for tag in tags_data:
-        #     tags += Tag.objects.get(name=tags_data['name'])
 
         photo = Photo.objects.create(
             **validated_data,
