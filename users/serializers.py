@@ -24,7 +24,7 @@ class UserProfileSerializer(serializers.HyperlinkedModelSerializer):
         view_name='users:profile-detail-api'
     )
     user = UserSerializer()
-    posts = serializers.PrimaryKeyRelatedField(
+    photos = serializers.PrimaryKeyRelatedField(
         many=True,
         queryset=Post.objects.all()
     )
@@ -39,6 +39,6 @@ class UserProfileSerializer(serializers.HyperlinkedModelSerializer):
             'id',
             'url',
             'user',
-            'posts',
+            'photos',
             'comments'
         ]

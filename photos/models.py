@@ -19,7 +19,7 @@ class Post(models.Model):
     author = models.ForeignKey(
         UserProfile,
         on_delete=models.CASCADE,
-        related_name='posts',
+        related_name='photos',
         null=True
     )
 
@@ -29,22 +29,24 @@ class Post(models.Model):
     taken_on = models.DateField('date taken')
     posted_on = models.DateTimeField(auto_now=True)
 
-    tags = models.ManyToManyField(Tag, related_name='posts')
+    tags = models.ManyToManyField(
+        Tag, related_name='photos', null=True, blank=True
+    )
 
     # Equipment
-    image = models.ImageField(upload_to='posts')
+    image = models.ImageField(upload_to='photos')
     camera = models.ForeignKey(
-        Camera, related_name='posts',
+        Camera, related_name='photos',
         on_delete=models.PROTECT,
         null=True, blank=True
     )
     film = models.ForeignKey(
-        Film, related_name='posts',
+        Film, related_name='photos',
         on_delete=models.PROTECT,
         null=True, blank=True
     )
     lens = models.ForeignKey(
-        Lens, related_name='posts',
+        Lens, related_name='photos',
         on_delete=models.PROTECT,
         null=True, blank=True
     )

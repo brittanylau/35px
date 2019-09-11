@@ -13,11 +13,11 @@ from .views import (
 )
 
 app_name = 'photos'
-api_url = 'api/posts/'
+api_url = 'api/photos/'
 
 router = DefaultRouter()
 router.register('tags', TagViewSet)
-router.register('posts', PostViewSet)
+router.register('photos', PostViewSet)
 router.register('comments', CommentViewSet)
 
 tag_list = TagViewSet.as_view({'get': 'list'})

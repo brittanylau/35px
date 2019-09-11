@@ -13,7 +13,7 @@ from .permissions import IsAuthorOrReadOnly
 # Templates
 
 TAG_TEMPLATE_DIR = 'tags/'
-POST_TEMPLATE_DIR = 'posts/'
+POST_TEMPLATE_DIR = 'photos/'
 COMMENT_TEMPLATE_DIR = 'comments/'
 
 
@@ -51,7 +51,7 @@ class PostCreate(CreateView):
 
     def form_valid(self, form):
         form.instance.author = self.request.user.profile
-        return super(CommentCreate, self).form_valid(form)
+        return super(PostCreate, self).form_valid(form)
 
 
 class PostUpdate(UpdateView):
