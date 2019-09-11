@@ -2,13 +2,8 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 
+from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
-from rest_framework.generics import (
-    ListCreateAPIView, RetrieveUpdateDestroyAPIView
-)
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework.reverse import reverse
 
 from .models import Tag, Post, Comment
 from .serializers import TagSerializer, PostSerializer, CommentSerializer
@@ -54,9 +49,9 @@ class PostCreate(CreateView):
     ]
     template_name = POST_TEMPLATE_DIR + 'post_create.html'
 
-    #def form_valid(self, form):
-    #    form.instance.author = self.request.user.profile
-    #    return super(CommentCreate, self).form_valid(form)
+    def form_valid(self, form):
+        form.instance.author = self.request.user.profile
+        return super(CommentCreate, self).form_valid(form)
 
 
 class PostUpdate(UpdateView):
@@ -87,9 +82,9 @@ class CommentCreate(CreateView):
     fields = ['post', 'text']
     template_name = COMMENT_TEMPLATE_DIR + 'comment_create.html'
 
-    # def form_valid(self, form):
-    #     form.instance.author = self.request.user.profile
-    #     return super(CommentCreate, self).form_valid(form)
+    def form_valid(self, form):
+        form.instance.author = self.request.user.profile
+        return super(CommentCreate, self).form_valid(form)
 
 
 class CommentUpdate(UpdateView):
@@ -112,59 +107,35 @@ class CommentDelete(DeleteView):
 # API endpoints
 
 
-@api_view(['GET'])
-def api_root(request, format=None):
-    return Response({
-        'tags': reverse(
-            'posts:tag-list-api',
-            request=request, format=format
-        ),
-        'posts': reverse(
-            'posts:post-list-api',
-            request=request, format=format
-        ),
-        'comments': reverse(
-            'posts:comment-list-api',
-            request=request, format=format
-        ),
-    })
-
-
-class TagListAPI(ListCreateAPIView):
+class TagViewSet(ModelViewSet):
     queryset = Tag.objects.all().order_by('name')
     serializer_class = TagSerializer
 
 
-class TagDetailAPI(RetrieveUpdateDestroyAPIView):
-    queryset = Tag.objects.all().order_by('name')
-    serializer_class = TagSerializer
-
-
-class PostListAPI(ListCreateAPIView):
+class PostViewSet(ModelViewSet):
     queryset = Post.objects.all().order_by('-posted_on')
     serializer_class = PostSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+
+    def get_permissions(self):
+        permission_classes = [IsAuthenticatedOrReadOnly]
+        if self.action != 'list':
+            permission_classes += [IsAuthorOrReadOnly]
+        return [permission() for permission in permission_classes]
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user.profile)
 
 
-class PostDetailAPI(RetrieveUpdateDestroyAPIView):
-    queryset = Post.objects.all().order_by('-posted_on')
-    serializer_class = PostSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly]
-
-
-class CommentListAPI(ListCreateAPIView):
+class CommentViewSet(ModelViewSet):
     queryset = Comment.objects.all().order_by('-posted_on')
     serializer_class = CommentSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    """
+    def get_permissions(self):
+        permission_classes = [IsAuthenticatedOrReadOnly]
+        if self.action != 'list':
+            permission_classes += [IsAuthorOrReadOnly]
+        return [permission() for permission in permission_classes]
+    """
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user.profile)
-
-
-class CommentDetailAPI(RetrieveUpdateDestroyAPIView):
-    queryset = Comment.objects.all().order_by('-posted_on')
-    serializer_class = CommentSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly, IsAuthorOrReadOnly]

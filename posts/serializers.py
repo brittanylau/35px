@@ -47,7 +47,6 @@ class PostSerializer(serializers.HyperlinkedModelSerializer):
     )
     author = serializers.ReadOnlyField(source='author.user.username')
     tags = TagSerializer(many=True)
-
     camera = CameraSerializer()
     film = FilmSerializer()
     lens = LensSerializer()

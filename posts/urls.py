@@ -1,92 +1,63 @@
-from django.urls import path
+from django.urls import path, include
 
-from rest_framework.urlpatterns import format_suffix_patterns
+from rest_framework.routers import DefaultRouter
 
-from . import views
-
-app_name = 'posts'
-
-api_url = 'api/posts/'
-
-urlpatterns = format_suffix_patterns([
+from .views import (
     # Templates
-    path('', views.PostList.as_view(), name='home'),
-
-    path('tags', views.TagList.as_view(), name='tag_list'),
-    path('tag/<int:pk>', views.TagDetail.as_view(), name='tag_detail'),
-
-    path(
-        'post/<int:pk>',
-        views.PostDetail.as_view(),
-        name='post_detail'
-    ),
-    path(
-        'post/create',
-        views.PostCreate.as_view(),
-        name='post_create'
-    ),
-    path(
-        'post/<int:pk>/update',
-        views.PostUpdate.as_view(),
-        name='post_edit'
-    ),
-    path(
-        'post/<int:pk>/delete',
-        views.PostDelete.as_view(),
-        name='post_delete'
-    ),
-
-    path(
-        'post/<int:pk>/comments/',
-        views.CommentList.as_view(),
-        name='comment_list'
-    ),
-    path(
-        'post/<int:pk>/comment/create',
-        views.CommentCreate.as_view(),
-        name='comment_create'
-    ),
-    path(
-        'post/<int:pk>/comment/update',
-        views.CommentUpdate.as_view(),
-        name='comment_edit'
-    ),
-    path(
-        'post/<int:pk>/comment/delete',
-        views.CommentDelete.as_view(),
-        name='comment_delete'
-    ),
+    TagList, TagDetail,
+    PostList, PostDetail, PostCreate, PostUpdate, PostDelete,
+    CommentCreate, CommentUpdate, CommentDelete,
 
     # API endpoints
-    path(api_url, views.api_root),
-    path(
-        api_url + 'tags/',
-        views.TagListAPI.as_view(),
-        name='tag-list-api'
-    ),
-    path(
-        api_url + 'tag/<int:pk>',
-        views.TagDetailAPI.as_view(),
-        name='tag-detail-api'
-    ),
-    path(
-        api_url + 'posts/',
-        views.PostListAPI.as_view(),
-        name='post-list-api'
-    ),
-    path(
-        api_url + 'post/<int:pk>',
-        views.PostDetailAPI.as_view(),
-        name='post-detail-api'
-    ),
-    path(
-        api_url + 'comments/',
-        views.CommentListAPI.as_view(),
-        name='comment-list-api'
-    ),
-    path(
-        api_url + 'comment/<int:pk>',
-        views.CommentDetailAPI.as_view(),
-        name='comment-detail-api'
-    ),
-])
+    TagViewSet, PostViewSet, CommentViewSet
+)
+
+app_name = 'posts'
+api_url = 'api/posts/'
+
+router = DefaultRouter()
+router.register('tags', TagViewSet)
+router.register('posts', PostViewSet)
+router.register('comments', CommentViewSet)
+
+tag_list = TagViewSet.as_view({'get': 'list'})
+post_list = PostViewSet.as_view({'get': 'list'})
+comment_list = CommentViewSet.as_view({'get': 'list'})
+
+tag_detail = TagViewSet.as_view({
+    'get': 'retrieve',
+    'patch': 'update'
+})
+post_detail = PostViewSet.as_view({
+    'get': 'retrieve',
+    'patch': 'update',
+    'delete': 'destroy'
+})
+comment_detail = CommentViewSet.as_view({
+    'get': 'retrieve',
+    'patch': 'update',
+    'delete': 'destroy'
+})
+
+urlpatterns = [
+    # Templates
+    path('', PostList.as_view(), name='home'),
+
+    path('tags', TagList.as_view(), name='tag_list'),
+    path('tag/<int:pk>', TagDetail.as_view(), name='tag_detail'),
+
+    path('post/<int:pk>', PostDetail.as_view(), name='post_detail'),
+    path('post/create', PostCreate.as_view(), name='post_create'),
+    path('post/<int:pk>/update', PostUpdate.as_view(), name='post_edit'),
+    path('post/<int:pk>/delete', PostDelete.as_view(), name='post_delete'),
+
+    path('post/<int:pk>/comment', CommentCreate.as_view(), name='comment_create'),
+    path('post/<int:pk>/comment/update', CommentUpdate.as_view(), name='comment_edit'),
+    path('post/<int:pk>/comment/delete', CommentDelete.as_view(), name='comment_delete'),
+
+    # API endpoints
+    path(api_url, include(router.urls)),
+    path(api_url + 'tag/<int:pk>', tag_detail, name='tag-detail-api'),
+    path(api_url + 'post/<int:pk>', post_detail, name='post-detail-api'),
+    path(api_url + 'comment/<int:pk>', comment_detail, name='comment-detail-api'),
+]
