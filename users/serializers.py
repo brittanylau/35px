@@ -5,15 +5,24 @@ from posts.models import Post, Comment
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
-    url = serializers.HyperlinkedIdentityField(view_name='users:user-detail-api')
+    url = serializers.HyperlinkedIdentityField(
+        view_name='users:user-detail-api'
+    )
 
     class Meta:
         model = User
-        fields = ['id', 'url', 'username', 'is_staff']
+        fields = [
+            'id',
+            'url',
+            'username',
+            'is_staff',
+        ]
 
 
 class UserProfileSerializer(serializers.HyperlinkedModelSerializer):
-    url = serializers.HyperlinkedIdentityField(view_name='users:profile-detail-api')
+    url = serializers.HyperlinkedIdentityField(
+        view_name='users:profile-detail-api'
+    )
     user = UserSerializer()
     posts = serializers.PrimaryKeyRelatedField(
         many=True,
@@ -26,4 +35,10 @@ class UserProfileSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = UserProfile
-        fields = ['id', 'url', 'user', 'posts', 'comments']
+        fields = [
+            'id',
+            'url',
+            'user',
+            'posts',
+            'comments'
+        ]

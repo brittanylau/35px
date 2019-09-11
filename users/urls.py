@@ -24,6 +24,14 @@ urlpatterns = [
 
     # API endpoints
     path(api_url, include(router.urls)),
-    path(api_url + 'user/<int:pk>/', user_detail, name='user-detail-api'),
-    path(api_url + 'profile/<int:pk>/', profile_detail, name='profile-detail-api'),
+    path(
+        api_url + 'user/<int:pk>/',
+        user_detail,
+        name='user-detail-api'
+    ),
+    path(
+        api_url + 'profile/<int:pk>/',
+        profile_detail,
+        name='profile-detail-api'
+    ),
 ]

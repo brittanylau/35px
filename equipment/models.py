@@ -17,7 +17,7 @@ class Camera(models.Model):
     def __str__(self):
         return self.brand.name + ' ' + self.name
 
- 
+
 class Film(models.Model):
     brand = models.ForeignKey(
         Brand, related_name='film', on_delete=models.PROTECT, null=True

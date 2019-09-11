@@ -1,19 +1,31 @@
 from rest_framework import serializers
 
 from .models import Tag, Post, Comment
-from equipment.serializers import CameraSerializer, FilmSerializer, LensSerializer
+from equipment.serializers import (
+    CameraSerializer,
+    FilmSerializer,
+    LensSerializer
+)
 
 
 class TagSerializer(serializers.HyperlinkedModelSerializer):
-    url = serializers.HyperlinkedIdentityField(view_name='posts:tag-detail-api')
+    url = serializers.HyperlinkedIdentityField(
+        view_name='posts:tag-detail-api'
+    )
 
     class Meta:
         model = Tag
-        fields = ['id', 'url', 'name']
+        fields = [
+            'id',
+            'url',
+            'name'
+        ]
 
 
 class CommentSerializer(serializers.HyperlinkedModelSerializer):
-    url = serializers.HyperlinkedIdentityField(view_name='posts:comment-detail-api')
+    url = serializers.HyperlinkedIdentityField(
+        view_name='posts:comment-detail-api'
+    )
     author = serializers.ReadOnlyField(source='author.user.username')
     post = serializers.ReadOnlyField(source='post.id')
 
@@ -30,14 +42,20 @@ class CommentSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class PostSerializer(serializers.HyperlinkedModelSerializer):
-    url = serializers.HyperlinkedIdentityField(view_name='posts:post-detail-api')
+    url = serializers.HyperlinkedIdentityField(
+        view_name='posts:post-detail-api'
+    )
     author = serializers.ReadOnlyField(source='author.user.username')
     tags = TagSerializer(many=True)
+
     camera = CameraSerializer()
     film = FilmSerializer()
     lens = LensSerializer()
+
     comments = CommentSerializer(many=True)
-    # comments = serializers.PrimaryKeyRelatedField(many=True, queryset=Comment.objects.all())
+    # comments = serializers.PrimaryKeyRelatedField(
+    #    many=True, queryset=Comment.objects.all()
+    # )
 
     class Meta:
         model = Post

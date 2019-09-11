@@ -1,7 +1,6 @@
 from django.views.generic import DetailView
 
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework import viewsets
+from rest_framework.viewsets import ModelViewSet
 
 from .models import Camera, Film, Lens
 from .serializers import CameraSerializer, FilmSerializer, LensSerializer
@@ -25,16 +24,16 @@ class LensDetail(DetailView):
 # API endpoints
 
 
-class CameraViewSet(viewsets.ModelViewSet):
+class CameraViewSet(ModelViewSet):
     queryset = Camera.objects.all()
     serializer_class = CameraSerializer
 
 
-class FilmViewSet(viewsets.ModelViewSet):
+class FilmViewSet(ModelViewSet):
     queryset = Film.objects.all()
     serializer_class = FilmSerializer
 
 
-class LensViewSet(viewsets.ModelViewSet):
+class LensViewSet(ModelViewSet):
     queryset = Lens.objects.all()
     serializer_class = LensSerializer
