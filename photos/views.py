@@ -10,7 +10,7 @@ from rest_framework.views import APIView
 from rest_framework import status
 
 from .models import Tag, Photo, Comment
-from .serializers import TagSerializer, PhotoSerializer, CommentSerializer, ImageSerializer
+from .serializers import TagSerializer, PhotoSerializer, CommentSerializer, PhotoFileSerializer
 from .permissions import IsAuthorOrReadOnly
 
 
@@ -50,7 +50,6 @@ class PhotoCreate(CreateView):
         'image',
         'title',
         'caption',
-        # 'taken_on',
         'camera',
         'film',
         'lens',
@@ -71,7 +70,6 @@ class PhotoUpdate(UpdateView):
     fields = [
         'title',
         'caption',
-        # 'taken_on',
         'camera',
         'film',
         'lens',
@@ -162,10 +160,16 @@ class ImageUploadView(APIView):
     parser_class = (FileUploadParser,)
 
     def post(self, request, *args, **kwargs):
-        image_serializer = ImageSerializer(data=request.data)
+        file_serializer = PhotoFileSerializer(data=request.data)
 
-        if image_serializer.is_valid():
-            image_serializer.save()
-            return Response(image_serializer.data, status=status.HTTP_201_CREATED)
+        if file_serializer.is_valid():
+            file_serializer.save(author=self.request.user.profile)
+            return Response(
+                file_serializer.data,
+                status=status.HTTP_201_CREATED
+            )
         else:
-            return Response(image_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                file_serializer.errors,
+                status=status.HTTP_400_BAD_REQUEST
+            )

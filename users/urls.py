@@ -7,14 +7,18 @@ from .views import UserViewSet, ProfileViewSet   # API views
 app_name = 'users'
 api_url = 'api/users/'
 
+list_actions = {'get': 'list'}
+detail_actions = {'get': 'retrieve'}
+
+user_list = UserViewSet.as_view(list_actions)
+profile_list = ProfileViewSet.as_view(list_actions)
+
+user_detail = UserViewSet.as_view(detail_actions)
+profile_detail = ProfileViewSet.as_view(detail_actions)
+
 router = DefaultRouter()
 router.register('users', UserViewSet)
 router.register('profiles', ProfileViewSet)
-
-user_list = UserViewSet.as_view({'get': 'list'})
-user_detail = UserViewSet.as_view({'get': 'retrieve'})
-profile_list = ProfileViewSet.as_view({'get': 'list'})
-profile_detail = ProfileViewSet.as_view({'get': 'retrieve'})
 
 urlpatterns = [
     # Templates

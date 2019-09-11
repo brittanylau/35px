@@ -11,13 +11,6 @@ class Tag(models.Model):
         return self.name
 
 
-class Image(models.Model):
-    file = models.ImageField(blank=False, null=False)
-
-    def __str__(self):
-        return self.file.name
-
-
 class Photo(models.Model):
 
     class Meta:

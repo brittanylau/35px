@@ -1,18 +1,12 @@
 from rest_framework import serializers
 
-from .models import Tag, Photo, Comment, Image
+from .models import Tag, Photo, Comment
 from equipment.models import Brand, Camera, Film, Lens
 from equipment.serializers import (
     CameraSerializer,
     FilmSerializer,
     LensSerializer
 )
-
-
-class ImageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Image
-        fields = "__all__"
 
 
 class TagSerializer(serializers.HyperlinkedModelSerializer):
@@ -69,6 +63,13 @@ class CommentSerializer(serializers.HyperlinkedModelSerializer):
     # TODO: update method
 
 
+class PhotoFileSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Photo
+        fields = ['image']
+
+
 class PhotoSerializer(serializers.HyperlinkedModelSerializer):
     url = serializers.HyperlinkedIdentityField(
         view_name='photos:photo-detail-api'
@@ -78,6 +79,7 @@ class PhotoSerializer(serializers.HyperlinkedModelSerializer):
     camera = CameraSerializer()
     film = FilmSerializer()
     lens = LensSerializer()
+    image = serializers.StringRelatedField()
 
     # comments = CommentSerializer(many=True)
 
@@ -87,6 +89,7 @@ class PhotoSerializer(serializers.HyperlinkedModelSerializer):
             'id',
             'url',
             'author',
+            'image',
             'title',
             'caption',
             'posted_on',
@@ -132,3 +135,5 @@ class PhotoSerializer(serializers.HyperlinkedModelSerializer):
             photo.tags.add(tag)
 
         return photo
+
+    # TODO: add update method

@@ -15,35 +15,21 @@ from .views import (
 app_name = 'photos'
 api_url = 'api/photos/'
 
+list_actions = {'get': 'list', 'post': 'create'}
+detail_actions = {'get': 'retrieve', 'patch': 'update', 'delete': 'destroy'}
+
+tag_list = TagViewSet.as_view(list_actions)
+photo_list = PhotoViewSet.as_view(list_actions)
+comment_list = CommentViewSet.as_view(list_actions)
+
+tag_detail = TagViewSet.as_view(detail_actions)
+photo_detail = PhotoViewSet.as_view(detail_actions)
+comment_detail = CommentViewSet.as_view(detail_actions)
+
 router = DefaultRouter()
 router.register('tags', TagViewSet)
 router.register('photos', PhotoViewSet)
 router.register('comments', CommentViewSet)
-
-tag_list = TagViewSet.as_view({
-    'get': 'list',
-    'post': 'create',
-})
-photo_list = PhotoViewSet.as_view({
-    'get': 'list',
-    'post': 'create',
-})
-comment_list = CommentViewSet.as_view({
-    'get': 'list',
-    'post': 'create',
-})
-tag_detail = TagViewSet.as_view({
-    'get': 'retrieve',
-    'patch': 'update'
-})
-photo_detail = PhotoViewSet.as_view({
-    'get': 'retrieve',
-    'delete': 'destroy',
-})
-comment_detail = CommentViewSet.as_view({
-    'get': 'retrieve',
-    'delete': 'destroy',
-})
 
 urlpatterns = [
     # Templates

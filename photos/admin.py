@@ -3,7 +3,7 @@ from .models import Tag, Photo, Comment
 
 
 class PhotoAdmin(admin.ModelAdmin):
-    list_display = ('author', 'posted_on', 'title', 'caption')
+    list_display = ('author', 'posted_on', 'image', 'title', 'caption')
     list_filter = ()
     search_fields = ['title', 'author']
 

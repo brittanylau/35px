@@ -7,34 +7,24 @@ from .views import BrandViewSet, CameraViewSet, FilmViewSet, LensViewSet  # API 
 app_name = 'equipment'
 api_url = 'api/equipment/'
 
+list_actions = {'get': 'list', 'post': 'create'}
+detail_actions = {'get': 'retrieve', 'delete': 'destroy'}
+
+brand_list = BrandViewSet.as_view(list_actions)
+camera_list = CameraViewSet.as_view(list_actions)
+film_list = FilmViewSet.as_view(list_actions)
+lens_list = LensViewSet.as_view(list_actions)
+
+brand_detail = BrandViewSet.as_view(detail_actions)
+camera_detail = CameraViewSet.as_view(detail_actions)
+film_detail = FilmViewSet.as_view(detail_actions)
+lens_detail = LensViewSet.as_view(detail_actions)
+
 router = DefaultRouter()
 router.register('brands', BrandViewSet)
 router.register('cameras', CameraViewSet)
 router.register('film', FilmViewSet)
 router.register('lenses', LensViewSet)
-
-brand_list = BrandViewSet.as_view({
-    'get': 'list',
-    'post': 'create',
-    'patch': 'update',
-})
-brand_detail = BrandViewSet.as_view({
-    'get': 'retrieve',
-    'patch': 'update',
-    'delete': 'destroy',
-})
-camera_list = CameraViewSet.as_view({
-    'get': 'list',
-    'post': 'create',
-})
-camera_detail = CameraViewSet.as_view({
-    'get': 'retrieve',
-    'delete': 'destroy',
-})
-film_list = FilmViewSet.as_view({'get': 'list'})
-film_detail = FilmViewSet.as_view({'get': 'retrieve'})
-lens_list = LensViewSet.as_view({'get': 'list'})
-lens_detail = LensViewSet.as_view({'get': 'retrieve'})
 
 urlpatterns = [
     # Templates
@@ -44,8 +34,8 @@ urlpatterns = [
 
     # API endpoints
     path(api_url, include(router.urls)),
-    path(api_url + 'brand/<int:pk>/', brand_detail, name='brand-detail-api'),
+    path(api_url + 'brand/<int:pk>/',  brand_detail,  name='brand-detail-api'),
     path(api_url + 'camera/<int:pk>/', camera_detail, name='camera-detail-api'),
-    path(api_url + 'film/<int:pk>/', film_detail, name='film-detail-api'),
-    path(api_url + 'lens/<int:pk>/', lens_detail, name='lens-detail-api')
+    path(api_url + 'film/<int:pk>/',   film_detail,   name='film-detail-api'),
+    path(api_url + 'lens/<int:pk>/',   lens_detail,   name='lens-detail-api')
 ]
