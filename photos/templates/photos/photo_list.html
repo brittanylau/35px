@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="text-center mb-4">
-  <a class="btn btn-primary" href="{% url 'photos:post_create' %}" role="button">
+  <a class="btn btn-primary" href="{% url 'photos:photo_create' %}" role="button">
     New photo
   </a>
 </div>
@@ -32,14 +32,14 @@
           <a
             class="btn dropdown-item"
             role="button"
-            href="{% url 'photos:post_edit' photo.id %}"
+            href="{% url 'photos:photo_edit' photo.id %}"
           >
             Edit
           </a>
           <a
             class="btn dropdown-item"
             role="button"
-            href="{% url 'photos:post_delete' photo.id %}"
+            href="{% url 'photos:photo_delete' photo.id %}"
           >
             Delete
           </a>
@@ -48,13 +48,13 @@
     </div>
 
     <!-- IMAGE -->
-    <a href="{% url 'photos:post_detail' photo.id %}">
+    <a href="{% url 'photos:photo_detail' photo.id %}">
       <img src="{{ photo.image.url }}" alt="{{ photo.title }}" class="card-img-top">
     </a>
 
     <!-- FOOTER -->
     <div class="card-footer">
-      <a href="{% url 'photos:post_detail' photo.id %}" class="text-muted">
+      <a href="{% url 'photos:photo_detail' photo.id %}" class="text-muted">
         {{ photo.posted_on|timesince }} ago
       </a>
     </div>

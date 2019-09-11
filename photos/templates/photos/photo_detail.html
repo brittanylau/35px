@@ -49,14 +49,14 @@
   </div>
 
   <div class="card-footer">
-    <a href="{% url 'photos:post_detail' photo.id %}" class="text-muted">
+    <a href="{% url 'photos:photo_detail' photo.id %}" class="text-muted">
       {{ photo.posted_on|timesince }} ago
     </a>
     <div class="float-right">
-      <a class="text-muted" href="{% url 'photos:post_edit' photo.id %}">
+      <a class="text-muted" href="{% url 'photos:photo_edit' photo.id %}">
         Edit
       </a>
-      <a class="text-muted" href="{% url 'photos:post_delete' photo.id %}">
+      <a class="text-muted" href="{% url 'photos:photo_delete' photo.id %}">
         Delete
       </a>
     </div>

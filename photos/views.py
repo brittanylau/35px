@@ -31,12 +31,12 @@ class TagDetail(DetailView):
 class PhotoList(ListView):
     model = Photo
     ordering = ['-posted_on']
-    template_name = PHOTO_TEMPLATE_DIR + 'post_list.html'
+    template_name = PHOTO_TEMPLATE_DIR + 'photo_list.html'
 
 
 class PhotoDetail(DetailView):
     model = Photo
-    template_name = PHOTO_TEMPLATE_DIR + 'post_detail.html'
+    template_name = PHOTO_TEMPLATE_DIR + 'photo_detail.html'
 
 
 class PhotoCreate(CreateView):
@@ -47,7 +47,7 @@ class PhotoCreate(CreateView):
         'exposure', 'aperture', 'shutter_speed',
         'tags'
     ]
-    template_name = PHOTO_TEMPLATE_DIR + 'post_create.html'
+    template_name = PHOTO_TEMPLATE_DIR + 'photo_create.html'
 
     def form_valid(self, form):
         form.instance.author = self.request.user.profile
@@ -62,13 +62,13 @@ class PhotoUpdate(UpdateView):
         'exposure', 'aperture', 'shutter_speed',
         'tags'
     ]
-    template_name = PHOTO_TEMPLATE_DIR + 'post_edit.html'
+    template_name = PHOTO_TEMPLATE_DIR + 'photo_edit.html'
 
 
 class PhotoDelete(DeleteView):
     model = Photo
     success_url = reverse_lazy('photos:home')
-    template_name = PHOTO_TEMPLATE_DIR + 'post_confirm_delete.html'
+    template_name = PHOTO_TEMPLATE_DIR + 'photo_confirm_delete.html'
 
 
 class CommentList(ListView):
@@ -99,7 +99,7 @@ class CommentDelete(DeleteView):
 
     def get_success_url(self):
         return reverse_lazy(
-            'photos:post_detail',
+            'photos:photo_detail',
             kwargs={'pk': self.object.photo.id}
         )
 

@@ -43,7 +43,7 @@ class CommentSerializer(serializers.HyperlinkedModelSerializer):
 
 class PhotoSerializer(serializers.HyperlinkedModelSerializer):
     url = serializers.HyperlinkedIdentityField(
-        view_name='photos:post-detail-api'
+        view_name='photos:photo-detail-api'
     )
     author = serializers.ReadOnlyField(source='author.user.username')
     tags = TagSerializer(many=True)

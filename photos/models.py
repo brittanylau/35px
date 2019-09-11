@@ -103,7 +103,7 @@ class Photo(models.Model):
         return self.title + ', taken by ' + self.author.user.username
 
     def get_absolute_url(self):
-        return reverse('photos:post_detail', kwargs={'pk': self.id})
+        return reverse('photos:photo_detail', kwargs={'pk': self.id})
 
 
 class Comment(models.Model):
@@ -126,4 +126,4 @@ class Comment(models.Model):
         return self.author.user.username + ' said \"' + self.text
 
     def get_absolute_url(self):
-        return reverse('photos:post_detail', kwargs={'pk': self.photo.id})
+        return reverse('photos:photo_detail', kwargs={'pk': self.photo.id})
