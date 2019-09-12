@@ -160,24 +160,10 @@ class PhotoSerializer(serializers.HyperlinkedModelSerializer):
 
         instance.save()
 
-        keep_tags = []
+        instance.tags.clear()
 
         for t in tag_data:
-            # if 'name' in t.keys():
-            #     if Tag.objects.filter(name=t['name']).exists():
-            #         tag = Tag.objects.get(name=t['name'])
-            #         keep_tags.append(tag.id)
-            # else:
-            #     tag = Tag.objects.create(**t)
-                tag = Tag.objects.get(name=t['name'])
-                keep_tags.append(tag)
-
-        for t in instance.tags.all():
-            if t not in keep_tags:
-                t.delete()
-
-        # for t in tag_data:
-        #     tag = Tag.objects.get(name=t['name'])
-        #     instance.tags.add(tag)
+            tag, created = Tag.objects.get_or_create(name=t['name'])
+            instance.tags.add(tag)
 
         return instance
