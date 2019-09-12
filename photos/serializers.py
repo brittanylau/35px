@@ -64,7 +64,7 @@ class CommentSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class PhotoFileSerializer(serializers.ModelSerializer):
-    
+
     class Meta:
         model = Photo
         fields = ['image']
@@ -129,11 +129,55 @@ class PhotoSerializer(serializers.HyperlinkedModelSerializer):
             lens=lens
         )
 
-        for data in tag_data:
-            tag_name = data['name']
-            tag = Tag.objects.get(name=tag_name)
+        for t in tag_data:
+            tag = Tag.objects.get(name=t['name'])
             photo.tags.add(tag)
 
         return photo
 
-    # TODO: add update method
+    def update(self, instance, validated_data):
+        tag_data = validated_data.pop('tags')
+        camera_data = validated_data.pop('camera')
+        film_data = validated_data.pop('film')
+        lens_data = validated_data.pop('lens')
+
+        camera = Camera.objects.get(
+            brand=Brand.objects.get(name=camera_data['brand']['name']),
+            name=camera_data['name'],
+        )
+        film = Film.objects.get(
+            brand=Brand.objects.get(name=film_data['brand']['name']),
+            name=film_data['name'],
+        )
+        lens = Lens.objects.get(
+            brand=Brand.objects.get(name=lens_data['brand']['name']),
+            name=lens_data['name'],
+        )
+
+        instance.camera = camera
+        instance.film = film
+        instance.lens = lens
+
+        instance.save()
+
+        keep_tags = []
+
+        for t in tag_data:
+            # if 'name' in t.keys():
+            #     if Tag.objects.filter(name=t['name']).exists():
+            #         tag = Tag.objects.get(name=t['name'])
+            #         keep_tags.append(tag.id)
+            # else:
+            #     tag = Tag.objects.create(**t)
+                tag = Tag.objects.get(name=t['name'])
+                keep_tags.append(tag)
+
+        for t in instance.tags.all():
+            if t not in keep_tags:
+                t.delete()
+
+        # for t in tag_data:
+        #     tag = Tag.objects.get(name=t['name'])
+        #     instance.tags.add(tag)
+
+        return instance

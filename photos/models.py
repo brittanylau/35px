@@ -25,8 +25,8 @@ class Photo(models.Model):
 
     image = models.ImageField(upload_to='photos', blank=False, null=False)
 
-    title = models.CharField(max_length=50)
-    caption = models.CharField(max_length=200)
+    title = models.CharField(max_length=50, blank=True)
+    caption = models.CharField(max_length=200, blank=True)
     posted_on = models.DateTimeField(auto_now=True)
 
     tags = models.ManyToManyField(
