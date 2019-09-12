@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 from django.urls import reverse
-from .models import Tag
+from photos.models import Tag
 
 client = Client()
 response = client.get('/')
@@ -33,6 +33,6 @@ class TagDetailViewTests(TestCase):
                 reverse('photos:tag_detail', kwargs={'pk': tag.id})
             )
             self.assertEqual(response.status_code, 200)
-            self.assertQuerysetEqual(response.context['post_list'], [])
+            self.assertQuerysetEqual(response.context['photo_list'], [])
 
     # TODO: Test if there are posts
