@@ -126,6 +126,7 @@ class CommentDelete(DeleteView):
 class TagViewSet(ModelViewSet):
     queryset = Tag.objects.all().order_by('name')
     serializer_class = TagSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
 
 class PhotoViewSet(ModelViewSet):
@@ -158,6 +159,7 @@ class CommentViewSet(ModelViewSet):
 
 class ImageUploadView(APIView):
     parser_class = (FileUploadParser,)
+    permission_classes = [IsAuthenticatedOrReadOnly]
 
     def post(self, request, *args, **kwargs):
         file_serializer = PhotoFileSerializer(data=request.data)
