@@ -56,7 +56,8 @@ class CommentSerializer(serializers.HyperlinkedModelSerializer):
 
     def create(self, validated_data):
         photo_data = validated_data.pop('photo')
-        photo = Photo.objects.get(title=photo_data['title'])  # ideally use ID but not sure how
+        # TODO: Assert that photo exists and reference by id
+        photo = Photo.objects.get(title=photo_data['title'])
         comment = Comment.objects.create(**validated_data, photo=photo)
         return comment
 

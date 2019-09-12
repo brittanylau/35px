@@ -31,7 +31,6 @@ class CameraSerializer(serializers.HyperlinkedModelSerializer):
             'name',
         ]
 
-    # TODO: Maybe allow creating new brands directly
     def create(self, validated_data):
         brand_data = validated_data.pop('brand')
         brand, created = Brand.objects.get_or_create(name=brand_data['name'])
@@ -54,7 +53,6 @@ class FilmSerializer(serializers.HyperlinkedModelSerializer):
             'name'
         ]
 
-    # TODO: Maybe allow creating new brands directly
     def create(self, validated_data):
         brand_data = validated_data.pop('brand')
         brand, created = Brand.objects.get_or_create(name=brand_data['name'])
@@ -77,7 +75,6 @@ class LensSerializer(serializers.HyperlinkedModelSerializer):
             'name'
         ]
 
-    # TODO: Maybe allow creating new brands directly
     def create(self, validated_data):
         brand_data = validated_data.pop('brand')
         brand, created = Brand.objects.get_or_create(name=brand_data['name'])
