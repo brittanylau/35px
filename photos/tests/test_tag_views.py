@@ -13,13 +13,13 @@ def create_tag(name):
 class TagListViewTests(TestCase):
     def test_no_tags(self):
         response = self.client.get(reverse('photos:tag_list'))
-        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'Tags', count=2, status_code=200)
         self.assertQuerysetEqual(response.context['tag_list'], [])
 
     def test_tag(self):
-        create_tag(name="tagname")
+        tag = create_tag(name="tagname")
         response = self.client.get(reverse('photos:tag_list'))
-        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, tag.name, count=1, status_code=200)
         self.assertQuerysetEqual(
             response.context['tag_list'],
             ['<Tag: tagname>']
@@ -32,7 +32,7 @@ class TagDetailViewTests(TestCase):
             response = self.client.get(
                 reverse('photos:tag_detail', kwargs={'pk': tag.id})
             )
-            self.assertEqual(response.status_code, 200)
+            self.assertContains(response, tag.name, count=1, status_code=200)
             self.assertQuerysetEqual(response.context['photo_list'], [])
 
     # TODO: Test if there are posts

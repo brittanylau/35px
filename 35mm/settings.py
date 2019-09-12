@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'rest_framework',
+    'rest_framework.authtoken',
     'photos.apps.PhotosConfig',
     'users.apps.UsersConfig',
     'equipment.apps.EquipmentConfig',
