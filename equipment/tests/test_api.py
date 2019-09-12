@@ -24,7 +24,7 @@ class CameraAPITestCase(APITestCase):
     def api_authentication(self):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
 
-    def test_create_camera_auth(self):
+    def test_create_delete_camera_auth(self):
 
         self.client.login(username=self.username, password=self.password)
 
@@ -32,12 +32,7 @@ class CameraAPITestCase(APITestCase):
         camera_name = 'X-700'
         response = self.client.post(
             self.url,
-            {
-                "brand": {
-                    "name": brand_name
-                },
-                "name": camera_name
-            },
+            {"brand": {"name": brand_name}, "name": camera_name},
             format='json'
         )
         self.assertEqual(201, response.status_code)
@@ -53,15 +48,12 @@ class CameraAPITestCase(APITestCase):
         camera_name = 'X-700'
         response = self.client.post(
             self.url,
-            {
-                "brand": {
-                    "name": brand_name
-                },
-                "name": camera_name
-            },
+            {"brand": {"name": brand_name}, "name": camera_name},
             format='json'
         )
         self.assertEqual(403, response.status_code)
+
+    # TODO: def test_delete_camera_no_auth(self):
 
 
 class FilmAPITestCase(APITestCase):
@@ -89,12 +81,7 @@ class FilmAPITestCase(APITestCase):
         film_name = 'Portra'
         response = self.client.post(
             self.url,
-            {
-                "brand": {
-                    "name": brand_name
-                },
-                "name": film_name
-            },
+            {"brand": {"name": brand_name}, "name": film_name},
             format='json'
         )
         self.assertEqual(201, response.status_code)
@@ -110,12 +97,7 @@ class FilmAPITestCase(APITestCase):
         film_name = 'Portra'
         response = self.client.post(
             self.url,
-            {
-                "brand": {
-                    "name": brand_name
-                },
-                "name": film_name
-            },
+            {"brand": {"name": brand_name}, "name": film_name},
             format='json'
         )
         self.assertEqual(403, response.status_code)
@@ -146,12 +128,7 @@ class LensAPITestCase(APITestCase):
         lens_name = 'Nikkor'
         response = self.client.post(
             self.url,
-            {
-                "brand": {
-                    "name": brand_name
-                },
-                "name": lens_name
-            },
+            {"brand": {"name": brand_name}, "name": lens_name},
             format='json'
         )
         self.assertEqual(201, response.status_code)
@@ -167,12 +144,7 @@ class LensAPITestCase(APITestCase):
         lens_name = 'Nikkor'
         response = self.client.post(
             self.url,
-            {
-                "brand": {
-                    "name": brand_name
-                },
-                "name": lens_name
-            },
+            {"brand": {"name": brand_name}, "name": lens_name},
             format='json'
         )
         self.assertEqual(403, response.status_code)
