@@ -93,10 +93,10 @@ class PhotoSerializer(serializers.HyperlinkedModelSerializer):
             'title',
             'caption',
             'posted_on',
-            'tags',    # must be existing
-            'camera',  # must be existing
-            'film',    # must be existing
-            'lens',    # must be existing
+            'tags',
+            'camera',
+            'film',
+            'lens',
             'aperture',
             'shutter_speed',
             'exposure',
@@ -104,21 +104,32 @@ class PhotoSerializer(serializers.HyperlinkedModelSerializer):
         ]
 
     def create(self, validated_data):
-        tag_data = validated_data.pop('tags')
         camera_data = validated_data.pop('camera')
         film_data = validated_data.pop('film')
         lens_data = validated_data.pop('lens')
+        tag_data = validated_data.pop('tags')
 
-        camera = Camera.objects.get(
-            brand=Brand.objects.get(name=camera_data['brand']['name']),
+        camera_brand, created = Brand.objects.get_or_create(
+            name=camera_data['brand']['name']
+        )
+        camera, created = Camera.objects.get_or_create(
+            brand=camera_brand,
             name=camera_data['name'],
         )
-        film = Film.objects.get(
-            brand=Brand.objects.get(name=film_data['brand']['name']),
+
+        film_brand, created = Brand.objects.get_or_create(
+            name=film_data['brand']['name']
+        )
+        film, created = Film.objects.get_or_create(
+            brand=film_brand,
             name=film_data['name'],
         )
-        lens = Lens.objects.get(
-            brand=Brand.objects.get(name=lens_data['brand']['name']),
+
+        lens_brand, created = Brand.objects.get_or_create(
+            name=lens_data['brand']['name']
+        )
+        lens, created = Lens.objects.get_or_create(
+            brand=lens_brand,
             name=lens_data['name'],
         )
 
@@ -130,27 +141,38 @@ class PhotoSerializer(serializers.HyperlinkedModelSerializer):
         )
 
         for t in tag_data:
-            tag = Tag.objects.get(name=t['name'])
+            tag, created = Tag.objects.get_or_create(name=t['name'])
             photo.tags.add(tag)
 
         return photo
 
     def update(self, instance, validated_data):
-        tag_data = validated_data.pop('tags')
         camera_data = validated_data.pop('camera')
         film_data = validated_data.pop('film')
         lens_data = validated_data.pop('lens')
+        tag_data = validated_data.pop('tags')
 
-        camera = Camera.objects.get(
-            brand=Brand.objects.get(name=camera_data['brand']['name']),
+        camera_brand, created = Brand.objects.get_or_create(
+            name=camera_data['brand']['name']
+        )
+        camera, created = Camera.objects.get_or_create(
+            brand=camera_brand,
             name=camera_data['name'],
         )
-        film = Film.objects.get(
-            brand=Brand.objects.get(name=film_data['brand']['name']),
+
+        film_brand, created = Brand.objects.get_or_create(
+            name=film_data['brand']['name']
+        )
+        film, created = Film.objects.get_or_create(
+            brand=film_brand,
             name=film_data['name'],
         )
-        lens = Lens.objects.get(
-            brand=Brand.objects.get(name=lens_data['brand']['name']),
+
+        lens_brand, created = Brand.objects.get_or_create(
+            name=lens_data['brand']['name']
+        )
+        lens, created = Lens.objects.get_or_create(
+            brand=lens_brand,
             name=lens_data['name'],
         )
 
