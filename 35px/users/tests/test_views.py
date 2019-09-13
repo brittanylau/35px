@@ -14,12 +14,13 @@ class UserProfileListViewTests(TestCase):
         self.assertQuerysetEqual(response.context['userprofile_list'], [])
 
     def test_one_profile(self):
-        user = User.objects.create_user(username='testuser', password='password')
+        username = 'testuser'
+        User.objects.create_user(username)
 
         response = self.client.get(reverse('users:user_list'))
         self.assertContains(
             response,
-            user.username,
+            username,
             count=1,
             status_code=200
         )
@@ -31,9 +32,9 @@ class UserProfileListViewTests(TestCase):
 
 class UserProfileDetailViewTests(TestCase):
     def test_no_photos(self):
-        User.objects.create_user(username='testuser1', password='password')
-        User.objects.create_user(username='testuser2', password='password')
-        User.objects.create_user(username='testuser3', password='password')
+        User.objects.create_user(username='testuser1')
+        User.objects.create_user(username='testuser2')
+        User.objects.create_user(username='testuser3')
 
         for profile in UserProfile.objects.all():
             response = self.client.get(
@@ -48,7 +49,8 @@ class UserProfileDetailViewTests(TestCase):
             # self.assertQuerysetEqual(response.context[''], [])
 
     def test_photos(self):
-        user = User.objects.create_user(username='testuser', password='password')
+        username = 'testuser'
+        user = User.objects.create_user(username)
         # TODO: create photos
 
         response = self.client.get(
@@ -56,7 +58,7 @@ class UserProfileDetailViewTests(TestCase):
         )
         self.assertContains(
             response,
-            user.username,
+            username,
             count=1,
             status_code=200
         )

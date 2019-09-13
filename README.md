@@ -32,9 +32,9 @@ A Django and Django REST framework project.
 `pip install -r requirements.txt`
 
 ## Running
-`cd 35px`
+`cd 35px`\
 `python manage.py runserver`
 
 ## Testing
-`cd 35px`
+`cd 35px`\
 `python manage.py test`
