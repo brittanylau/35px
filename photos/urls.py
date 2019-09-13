@@ -49,8 +49,8 @@ urlpatterns = [
 
     # API endpoints
     path(api_url, include(router.urls)),
-    path(api_url + 'tag/<int:pk>', tag_detail, name='tag-detail-api'),
-    path(api_url + 'photo/<int:pk>', photo_detail, name='photo-detail-api'),
-    path(api_url + 'comment/<int:pk>', comment_detail, name='comment-detail-api'),
+    path(api_url + 'tags/<int:pk>', tag_detail, name='tag-detail-api'),
+    path(api_url + 'photos/<int:pk>', photo_detail, name='photo-detail-api'),
+    path(api_url + 'comments/<int:pk>', comment_detail, name='comment-detail-api'),
     path(api_url + 'upload', ImageUploadView.as_view(), name='image-upload-api')
 ]

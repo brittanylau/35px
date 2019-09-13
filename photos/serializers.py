@@ -64,6 +64,13 @@ class CommentSerializer(serializers.HyperlinkedModelSerializer):
     # TODO: update method
 
 
+"""
+Making new posts:
+1) Post image file to PhotoFileSerializer
+2) Patch the Photo created using PhotoSerializer to add metadata
+"""
+
+
 class PhotoFileSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -136,9 +143,14 @@ class PhotoSerializer(serializers.HyperlinkedModelSerializer):
 
         photo = Photo.objects.create(
             **validated_data,
+            title=validated_data.pop('title'),
+            caption=validated_data.pop('caption'),
             camera=camera,
             film=film,
-            lens=lens
+            lens=lens,
+            aperture=validated_data.pop('aperture'),
+            shutter_speed=validated_data.pop('shutter_speed'),
+            exposure=validated_data.pop('exposure'),
         )
 
         for t in tag_data:
@@ -177,9 +189,14 @@ class PhotoSerializer(serializers.HyperlinkedModelSerializer):
             name=lens_data['name'],
         )
 
+        instance.title = validated_data.pop('title')
+        instance.caption = validated_data.pop('caption')
         instance.camera = camera
         instance.film = film
         instance.lens = lens
+        instance.aperture = validated_data.pop('aperture')
+        instance.shutter_speed = validated_data.pop('shutter_speed')
+        instance.exposure = validated_data.pop('exposure')
 
         instance.save()
 

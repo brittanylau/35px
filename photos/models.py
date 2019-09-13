@@ -54,15 +54,15 @@ class Photo(models.Model):
     # Capture data
 
     APERTURES = (
-        (1.4, '1.4'),
-        (2,   '2'),
-        (2.8, '2.8'),
-        (4,   '4'),
-        (5.6, '5'),
-        (8,   '8'),
-        (11,  '11'),
-        (16,  '16'),
-        (22,   '22'),
+        (14,  '1.4'),
+        (20,  '2'),
+        (28,  '2.8'),
+        (40,  '4'),
+        (56,  '5.6'),
+        (80,  '8'),
+        (110, '11'),
+        (160, '16'),
+        (220, '22'),
     )
     SHUTTER_SPEEDS = (
         (1,    '1'),
@@ -86,9 +86,8 @@ class Photo(models.Model):
         (800, '800'),
         (1600, '1600'),
     )
-    aperture = models.DecimalField(
+    aperture = models.PositiveIntegerField(
         choices=APERTURES,
-        max_digits=3, decimal_places=1,
         null=True, blank=True
     )
     shutter_speed = models.PositiveIntegerField(
