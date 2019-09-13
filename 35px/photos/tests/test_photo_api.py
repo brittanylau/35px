@@ -1,4 +1,3 @@
-import json
 import tempfile
 
 from django.urls import reverse
@@ -10,7 +9,6 @@ from rest_framework.authtoken.models import Token
 from PIL import Image
 
 from photos.models import Photo
-from users.models import UserProfile
 
 
 class ImageUploadAPITestCase(APITestCase):
@@ -26,8 +24,6 @@ class ImageUploadAPITestCase(APITestCase):
 
         self.token = Token.objects.create(user=self.user)
         self.api_authentication()
-
-        self.profile = UserProfile.objects.create(user=self.user)
 
     def api_authentication(self):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
@@ -54,7 +50,7 @@ class ImageUploadAPITestCase(APITestCase):
         self.assertEqual(201, response.status_code)
 
         author = Photo.objects.get(id=1).author
-        self.assertEqual(author, self.profile)
+        self.assertEqual(author, self.user.profile)
 
     def test_upload_no_auth(self):
         """
@@ -88,8 +84,6 @@ class PhotoAPITestCase(APITestCase):
 
         self.token = Token.objects.create(user=self.user)
         self.api_authentication()
-
-        self.profile = UserProfile.objects.create(user=self.user)
 
     def api_authentication(self):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)

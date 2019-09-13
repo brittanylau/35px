@@ -7,11 +7,6 @@ client = Client()
 response = client.get('/')
 
 
-def create_user_profile(username):
-    user = User.objects.create_user(username, password='password')
-    return UserProfile.objects.create(user=user)
-
-
 class UserProfileListViewTests(TestCase):
     def test_no_profiles(self):
         response = self.client.get(reverse('users:user_list'))
@@ -19,12 +14,12 @@ class UserProfileListViewTests(TestCase):
         self.assertQuerysetEqual(response.context['userprofile_list'], [])
 
     def test_one_profile(self):
-        profile = create_user_profile('testuser')
+        user = User.objects.create_user(username='testuser', password='password')
 
         response = self.client.get(reverse('users:user_list'))
         self.assertContains(
             response,
-            profile.user.username,
+            user.username,
             count=1,
             status_code=200
         )
@@ -36,9 +31,9 @@ class UserProfileListViewTests(TestCase):
 
 class UserProfileDetailViewTests(TestCase):
     def test_no_photos(self):
-        create_user_profile('testuser1')
-        create_user_profile('testuser2')
-        create_user_profile('testuser3')
+        User.objects.create_user(username='testuser1', password='password')
+        User.objects.create_user(username='testuser2', password='password')
+        User.objects.create_user(username='testuser3', password='password')
 
         for profile in UserProfile.objects.all():
             response = self.client.get(
@@ -53,15 +48,15 @@ class UserProfileDetailViewTests(TestCase):
             # self.assertQuerysetEqual(response.context[''], [])
 
     def test_photos(self):
-        profile = create_user_profile('testuser')
+        user = User.objects.create_user(username='testuser', password='password')
         # TODO: create photos
 
         response = self.client.get(
-            reverse('users:user_detail', kwargs={'pk': profile.id})
+            reverse('users:user_detail', kwargs={'pk': user.profile.id})
         )
         self.assertContains(
             response,
-            profile.user.username,
+            user.username,
             count=1,
             status_code=200
         )
