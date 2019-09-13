@@ -31,6 +31,7 @@ class PhotoNameSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Photo
         fields = [
+            'id',
             'url',
             'title',
         ]
