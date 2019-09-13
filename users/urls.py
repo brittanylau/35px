@@ -1,10 +1,21 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
-from .views import UserList, UserDetail, SignUp  # Templates
-from .views import UserViewSet, ProfileViewSet   # API views
+from .views.templates import UserList, UserDetail, SignUp
+from .views.viewsets import UserViewSet, ProfileViewSet
 
 app_name = 'users'
+
+# Templates
+
+urlpatterns = [
+    path('users',         UserList.as_view(),   name='user_list'),
+    path('user/<int:pk>', UserDetail.as_view(), name='user_detail'),
+    path('signup/',       SignUp.as_view(),     name='signup'),
+]
+
+# API endpoints
+
 api_url = 'api/users/'
 
 list_actions = {'get': 'list'}
@@ -20,13 +31,7 @@ router = DefaultRouter()
 router.register('users', UserViewSet)
 router.register('profiles', ProfileViewSet)
 
-urlpatterns = [
-    # Templates
-    path('users',         UserList.as_view(),   name='user_list'),
-    path('user/<int:pk>', UserDetail.as_view(), name='user_detail'),
-    path('signup/',       SignUp.as_view(),     name='signup'),
-
-    # API endpoints
+urlpatterns += [
     path(api_url, include(router.urls)),
     path(
         api_url + 'user/<int:pk>/',
