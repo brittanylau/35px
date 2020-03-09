@@ -71,12 +71,12 @@ A Django and Django REST framework project.
 | `DELETE` | /api/equipment/lenses/{pk} | delete a single lens | must be logged in |
 
 ## Install
-`pip install -r requirements.txt`
+`pip install -r requirements.txt`\
+`cd 35px`\
+`python manage.py migrate`
 
 ## Running
-`cd 35px`\
 `python manage.py runserver`
 
 ## Testing
-`cd 35px`\
 `python manage.py test`
